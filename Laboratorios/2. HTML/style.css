@@ -1,9 +1,19 @@
 /* style.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root{
+    --size: 1rem;
+}
+
 * {
     background-color: #ffffff;
     max-width: 1280px;
     margin: 0 auto;
- 
+ }
+
+body{
+    margin-top: 100px;
 }
 
 img {
@@ -12,68 +22,160 @@ img {
     border-style: none;
 }
 
-img:hover {
-    border-style: solid;
-    border-color: #845ec2;
-      
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--size);
+    padding: var(--size);
+    background-color: #ffffff;
+    width: 100%;
+    justify-content: center;
+    max-width: 960px;
 }
 
-.container {
+.item{
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    background-color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item .text {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+.container img:hover{
+    border-style: solid;
+    border-color: #845ec2;
+}
+
+.titulo{
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    margin-left: 30px;
+}
+
+.item .nombre {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+  }
+  
+.item .precio {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;  
+    font-size: 14px;
+  }
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    padding: var(--size)
+    border-bottom: 1px solid black;
+    border-bottom-style: solid;
+    align-items: center;
+    position: fixed;
+    top: 0;
     width: 100%;
 }
 
-.box {
-    font-size: 24px;
-    text-align: center;
-    padding: 22px;
-    margin: 22px;
-    margin-bottom: 0px;
-    padding-top: 5px;
-    padding-bottom: 0px;
-    width: 250px;
-}
-
-
-.fuente{
-    font-family: 'Montserrat extrabold';
-    font-size: 32px;
-    margin-left: 70px;
-    margin-top: 18px;
-    margin-bottom: 0px;
-    text-align: left;
-}
-
-.fuente2{
+.navbar div{
     align-items: center;
-    font-family: 'Montserrat regular';  
-    font-size: 14px;
-    padding-right: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
     margin: 12px;
     margin-left: 25px;
+    text-align: center;
+    max-width: 1100px;
 }
 
-.fuente3{
-    text-align: right;
-    font-family: 'Montserrat extrabold';  
-    font-size: 14px;
-    padding-left: 30px;
-    margin: 12px;
-    margin-right: 0px;
-
-}
-
-.navegacion{
-    border-bottom: 1px black;
-    border-bottom-style: solid;
+.navbar div:hover{
+    border-style: solid;
+    border-color: #845ec2;
 }
 
 .footer{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
     background-color: black;
     border: solid;
     margin-top: 36px;
+    
 }
+
+.footer div{
+    display: flex;
+    align-items: center;
+    font-family: 'Montserrat regular'; 
+    color: white; 
+    background-color: black;
+    font-size: 16px;
+    width: 90%;
+    margin: 10px;
+    padding-bottom: 10px;
+}
+
+.footer img{
+    padding: 2px;
+    border: 2px solid white; 
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}    
+
+
+.footer div:hover{
+    border-style: solid;
+    border-color: #845ec2;
+}
+
+@media (max-width: 920px){
+
+    .navbar{
+        display: flex;
+        justify-content: center;
+        padding: var(--size)
+        border-bottom: 1px solid black;
+        border-bottom-style: solid;
+        align-items: center;
+    }
+    
+  
+    .navbar .ocultar{
+        display: none;
+    }
+
+
+    .footer{
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: left;
+        background-color: black;
+        border: solid;
+        margin-top: 36px;
+           
+    }
+
+    .footer div{
+        font-family: 'Montserrat regular';  
+        background-color: black;
+        border-bottom: 1px solid white;
+        border-bottom-style: solid;
+        margin: 12px;
+               
+    }
+}
+
+
+  
+
+
+
