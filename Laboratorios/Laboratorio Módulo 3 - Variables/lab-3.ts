@@ -1,8 +1,8 @@
-const pop = "🎵 Pop Rock"
-const rock = "🎸 Rock"
-const hard = "🤘 Hard Rock"
-const clasica = "🎼 Clásica"
-const estilo = "font-size: 15px; font-weight: bold; background-color: green"
+const pop = "🎵 Pop Rock";
+const rock = "🎸 Rock";
+const hard = "🤘 Hard Rock";
+const clasica = "🎼 Clásica";
+const estilo = "font-size: 15px; font-weight: bold; background-color: green";
 
 interface Grupo{
     nombre: string;
