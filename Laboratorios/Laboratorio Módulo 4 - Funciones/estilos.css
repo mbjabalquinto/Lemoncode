@@ -60,33 +60,33 @@ body{
 
 .button-green, .button-reset {
     
-    border: none; /* Sin bordes */
-    color: white; /* Color del texto */
-    padding: 15px 32px; /* Espaciado interno */
-    text-align: center; /* Alineación del texto */
-    text-decoration: none; /* Sin decoración de texto */
+    border: none; 
+    color: white; 
+    padding: 15px 32px; 
+    text-align: center; 
+    text-decoration: none; 
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
-    cursor: pointer; /* Cambia el cursor al pasar el ratón por encima */
-    border-radius: 12px; /* Bordes redondeados */
+    cursor: pointer; 
+    border-radius: 12px; 
 }
 
 .button-green {
-    background-color: #4CAF50; /* Color de fondo */
+    background-color: #4CAF50; 
 }
 
 .button-green:hover {
-    background-color: #45a049; /* Cambia el color de fondo al pasar el ratón por encima */
+    background-color: #45a049; 
 }
 
 .button-reset {
-    background-color: #f80606; /* Color de fondo */
+    background-color: #f80606; 
    
 }
 
 .button-reset:hover {
-    background-color: #b30d0d; /* Cambia el color de fondo al pasar el ratón por encima */
+    background-color: #b30d0d; 
 }
 
 .input{
