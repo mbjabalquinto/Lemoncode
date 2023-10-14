@@ -1,0 +1,96 @@
+:root{
+    --size: 1rem;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.turno-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 800px;
+    margin: 2px;
+    
+}
+
+.botones {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 800px;
+    margin: 2px;
+
+}
+  
+.numero-turno {
+    font-size: 15rem;
+    font-weight: bold;
+    margin: 0;
+}
+  
+.texto-turno {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+.texto-cambio {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+.button-green, .button-reset {
+    
+    border: none; /* Sin bordes */
+    color: white; /* Color del texto */
+    padding: 15px 32px; /* Espaciado interno */
+    text-align: center; /* Alineación del texto */
+    text-decoration: none; /* Sin decoración de texto */
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer; /* Cambia el cursor al pasar el ratón por encima */
+    border-radius: 12px; /* Bordes redondeados */
+}
+
+.button-green {
+    background-color: #4CAF50; /* Color de fondo */
+}
+
+.button-green:hover {
+    background-color: #45a049; /* Cambia el color de fondo al pasar el ratón por encima */
+}
+
+.button-reset {
+    background-color: #f80606; /* Color de fondo */
+   
+}
+
+.button-reset:hover {
+    background-color: #b30d0d; /* Cambia el color de fondo al pasar el ratón por encima */
+}
+
+.input{
+    width: 70px;
+    text-align: center;
+    margin: 10px;
+}

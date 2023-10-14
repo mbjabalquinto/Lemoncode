@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="estilos.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Turno</title>
+    </head>
+    <body>
+    <div class="turno-display">
+        <h1 id="turno" class="numero-turno">00</h1>
+        <p class="texto-turno">Por favor, acérquese al mostrador</p>
+        
+    </div>
+
+    <div class="botones">
+        <button class="button-green" id="anterior">Anterior</button>
+        <button class="button-reset" id="reset">Reset</button>
+        <button class="button-green" id="siguiente">Siguiente</button>
+    </div>
+
+    <div class="turno-display">
+        <label class="texto-cambio" for="numero">Cambio manual:</label>
+        <input class="input" type="number" id="numero" />
+        <button class="button-reset" id="cambiar">Cambiar</button>
+        
+    </div>
+          
+    
+    <script src="index.js"></script>
+  </body>
+</html>
