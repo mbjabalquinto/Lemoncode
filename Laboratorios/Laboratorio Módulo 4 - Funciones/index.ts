@@ -1,73 +1,79 @@
-function actualizaTurno(turno: string) : void{
-    const numeroTurno = document.getElementById(turno);
-    const cambioManual = document.getElementById("numero");
-    if(cambioManual instanceof HTMLInputElement){
-        if(numeroTurno !== null && numeroTurno !== undefined && cambioManual !== null && cambioManual !== undefined){
-            if(Number(cambioManual.value) > 0){     // Controlamos que no se introduzcan valores negativos.
-                numeroTurno.textContent = String(cambioManual.value).padStart(2, '0');
-            }
-        }
-    }
+// modifica la lógica
+
+let turno: number = 0;
+
+const siguienteTurno = (): void => {
+  turno++;
+  pintaTurno(turno);
+};
+
+const anteriorTurno = (): void => {
+  if (turno > 0) {
+    turno--;
+    pintaTurno(turno);
+  }
+};
+
+function resetTurno(): void {
+  turno = 0;
+  pintaTurno(turno);
 }
 
-function siguienteTurno(turno: string) : void{
-    const turnoSig = document.getElementById(turno);
-    if(turnoSig !== null && turnoSig !== undefined){
-        if(turnoSig instanceof HTMLElement){
-            let valorActual = Number(turnoSig.textContent);
-            let nuevoValor = valorActual + 1;
-            let valorFinal = String(nuevoValor).padStart(2, '0');
-            turnoSig.textContent = valorFinal;
-        }
+// modifica ui
+
+const pintaTurno = (turno: number): void => {
+  const numeroTurno = document.getElementById("turno");
+  if (
+    numeroTurno !== null &&
+    numeroTurno !== undefined &&
+    numeroTurno instanceof HTMLHeadingElement
+  ) {
+    numeroTurno.textContent = turno.toString().padStart(2, "0");
+  } else {
+    console.log("Error al pintar el turno");
+  }
+};
+
+const actualizaTurno = (): void => {
+  const nuevoTurno = document.getElementById("numero");
+  if (
+    nuevoTurno !== undefined &&
+    nuevoTurno !== null &&
+    nuevoTurno instanceof HTMLInputElement
+  ) {
+    if (Number(nuevoTurno.value) > 0) {
+      // Controlamos que no se introduzcan valores negativos.
+      turno = Number(nuevoTurno.value);
+      pintaTurno(turno);
     }
+  } else {
+    console.log("Error al actualizar el turno");
+  }
+};
 
-}
+// modifica eventos
+const crearEventoBoton = (id: string, func: () => void): void => {
+  const boton = document.getElementById(id);
+  if (
+    boton !== null &&
+    boton !== undefined &&
+    boton instanceof HTMLButtonElement
+  ) {
+    boton.addEventListener("click", func); // Añade el controlador de eventos.
+  } else {
+    console.log("Error al crear el evento");
+  }
+};
 
-function anteriorTurno(turno: string) : void{
-    const turnoSig = document.getElementById(turno);
-    if(turnoSig !== null && turnoSig !== undefined){
-        if(turnoSig instanceof HTMLElement){
-            let valorActual = Number(turnoSig.textContent);
-            if(valorActual > 0){    // Controlamos que el contador no quede en negativo.                 
-                let nuevoValor = valorActual - 1;
-                let valorFinal = String(nuevoValor).padStart(2, '0');
-                turnoSig.textContent = valorFinal;
-            }
-        }
-    }
-}
+const eventos = () => {
+  crearEventoBoton("siguiente", siguienteTurno);
+  crearEventoBoton("anterior", anteriorTurno);
+  crearEventoBoton("reset", resetTurno);
+  crearEventoBoton("cambiar", actualizaTurno);
+};
 
-function resetTurno(turno: string) : void{
-    const reset = document.getElementById(turno);
-    if(reset !== null && reset !== undefined){
-        let nuevoValor = "00";
-        reset.textContent = nuevoValor;
-    }
-    
-}
-
-function addController(boton:string):void {
-    const  botonPulsado = document.getElementById(boton);                              // Busca el elemento en el DOM.
-    if(botonPulsado !== null && botonPulsado !== undefined){  
-        if(boton == "siguiente"){                                
-            botonPulsado.addEventListener("click", () => siguienteTurno("turno"));  // Añade el controlador de eventos.
-        }
-        else if(boton == "anterior"){
-            botonPulsado.addEventListener("click", () => anteriorTurno("turno"));
-        }
-        else if(boton == "reset"){
-            botonPulsado.addEventListener("click", () => resetTurno("turno"));
-        }
-        else if(boton == "cambiar"){
-            botonPulsado.addEventListener("click", () => actualizaTurno("turno"));
-        }
-    }
-}
-
-
-addController("siguiente");
-addController("anterior");
-addController("reset");
-addController("cambiar");
-
-
+// La primera vez que se carga la página, una vez ha cargado todos los elementos llama a las funciones indicadas.
+document.addEventListener("DOMContentLoaded", () => {
+  pintaTurno(turno);
+  eventos();
+});
