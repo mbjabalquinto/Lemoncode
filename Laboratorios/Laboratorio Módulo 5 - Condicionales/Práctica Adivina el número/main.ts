@@ -84,13 +84,11 @@ const compruebaResultado = (): void => {
 const creaEventos = (): void => {
   const evento = document.getElementById("boton");
   if(compruebaElementoHtmlButton(evento)){
-    if(intentos > 0){   // MIENTRAS QUEDEN INTENTOS PERMITO QUE SE EJECUTE LA LÓGICA AL PULSAR EL BOTÓN.
-      evento.addEventListener("click", compruebaResultado);
-    }
+    evento.addEventListener("click", compruebaResultado);
   }
 }
-
+  
 // LLAMA AL MANEJADOR DE EVENTOS TRAS CARGAR EL HTML COMPLETO.
 document.addEventListener("DOMContentLoaded", () => {
   creaEventos();
-})
+});
