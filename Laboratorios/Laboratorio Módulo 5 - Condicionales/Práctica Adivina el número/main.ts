@@ -33,7 +33,7 @@ const comparaNumeros = (numUsuario: number, resultado: number): string => {
 // LOGÍCA PARA MOSTRAR EN PANTALLA LOS INTENTOS RESTANTES.
 const pintaIntentos = (): void => {
   let elementoIntentos = document.getElementById("intentos");
-  if(intentos > 1){
+  if(intentos > 1){  // SI INTENTOS ES MAYOR QUE 1 DESCUENTO 1. ESTO ES PARA EVITAR QUE ME DEJE HACER UN INTENTO EXTRA CUANDO YA HA LLEGADO A 0.
     intentos = intentos - 1;
       if (compruebaElementoHtmlDiv(elementoIntentos)) {
         elementoIntentos.textContent = `Intentos: ${intentos}`;
