@@ -1,4 +1,5 @@
 let puntuacion: number = 0;
+// OBJETO CON LAS URL DE LAS CARTAS.
 let cartas: Record<number, string> = {
   1: "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/1_as-copas.jpg",
   2: "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/2_dos-copas.jpg",
@@ -12,33 +13,34 @@ let cartas: Record<number, string> = {
   12: "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/12_rey-copas.jpg",
 };
 
-const muestraPuntuacion = (): void => {
-  const marcador = document.getElementById("puntuacion");
-  if (
-    marcador !== null &&
-    marcador !== undefined &&
-    marcador instanceof HTMLDivElement
-  ) {
-    marcador.textContent = "Puntuación:  " + puntuacion.toString();
-  }
-};
+// FUNCION PARA MOSTRAR LA PUNTUACIÓN EN PANTALLA.
+
 // GENERA UN NÚMERO DE CARTA AL AZAR EVITANDO EL 8 Y EL 9 CUANDO SE PULSA EL BOTÓN.
+
+const generaNumeroAleatorio = (): number => {
+  return Math.floor(Math.random() * 10) + 1;
+};
+
+const valorCarta = (numeroAleatorio: number): number => {
+  return numeroAleatorio <= 7 ? numeroAleatorio : numeroAleatorio + 2;
+};
+
 const dameCarta = (): void => {
-  const cartaAleatoria = () => Math.floor(Math.random() * 12) + 1;
-  let numero: number = 0;
-  // PARA EVITAR LOS NÚMEROS 8 Y 9.
-  do {
-    numero = cartaAleatoria();
-  } while (numero === 8 || numero === 9);
+  const numeroAleatorio: number = generaNumeroAleatorio();
+  const valor: number = valorCarta(numeroAleatorio);
+  const carta: string = cartas[valor];
+  pintaCarta(carta);
+  sumaPuntuacion(valor);
+  muestraPuntuacion();
 
-  console.log(numero);
-  let resultado: boolean = muestraCarta(numero);
-
-  if (resultado) {
+  if (puntuacion > 7.5) {
     gameOver();
-    nuevaPartida();
+  } else if (puntuacion === 7.5) {
+    mePlanto();
+    desactivaBoton("continuar");
   }
 };
+
 // INSERTA EN PANTALLA LA NUEVA CARTA.
 const pintaCarta = (carta: string): void => {
   const card = document.getElementById("cartas");
@@ -49,10 +51,24 @@ const pintaCarta = (carta: string): void => {
     card.appendChild(img);
   }
 };
+
+// ELIMINA TODOS LOS HIJOS DEL ELEMENTO DIV. LIMPIA TODAS LAS CARTAS ANTERIORES PARA COMENZAR DE NUEVO.
+const limpiaCartas = (): void => {
+  const card = document.getElementById("cartas");
+  if (card !== null && card !== undefined && card instanceof HTMLDivElement) {
+    while (card.firstChild) {
+      card.removeChild(card.firstChild);
+    }
+  }
+};
+
 // FUNCION PARA SUMAR LA PUNTUACIÓN CADA VEZ QUE SE PIDE UNA NUEVA CARTA.
-const sumaPuntuacion = (numero: string): boolean => {
-  puntuacion = puntuacion + Number(numero);
-  return puntuacion > 7.5;
+const sumaPuntuacion = (numero: number) => {
+  if (numero === 10 || numero === 11 || numero === 12) {
+    puntuacion = puntuacion + 0.5;
+  } else {
+    puntuacion = puntuacion + Number(numero);
+  }
 };
 
 // MUESTRA EL MENSAJE AL PLANTARSE.
@@ -63,7 +79,19 @@ const mensajeFinal = (texto: string): void => {
     mensaje !== undefined &&
     mensaje instanceof HTMLDivElement
   ) {
+    mensaje.style.display = "block";
     mensaje.textContent = texto;
+  }
+};
+
+const ocultaMensajes = (id: string): void => {
+  const mensaje = document.getElementById(id);
+  if (
+    mensaje !== null &&
+    mensaje !== undefined &&
+    mensaje instanceof HTMLDivElement
+  ) {
+    mensaje.style.display = "none";
   }
 };
 
@@ -75,135 +103,92 @@ const desactivaBoton = (id: string): void => {
     boton !== undefined &&
     boton instanceof HTMLButtonElement
   ) {
-    boton.disabled = true;
+    // boton.disabled = true;
+    // boton.hidden = true;
+    boton.style.display = "none";
+  }
+};
+
+// FUNCION PARA ACTIVAR LOS BOTONES.
+const activaBoton = (id: string): void => {
+  const boton = document.getElementById(id);
+  if (
+    boton !== null &&
+    boton !== undefined &&
+    boton instanceof HTMLButtonElement
+  ) {
+    // boton.disabled = false;
+    // boton.hidden = false;
+    boton.style.display = "block";
   }
 };
 
 // MUESTRA NUEVO BOTÓN PARA NUEVA PARTIDA. CONTROLO QUE EL BOTÓN NO HAYA SIDO INSERTADO YA PARA NO REPETIRLO.
 const nuevaPartida = () => {
-  const nueva = document.getElementById("nuevoBoton");
-  const botonExistente = document.getElementById("nuevaPartida");
+  // reiniciar todo, ocultar textos, botones..
+  puntuacion = 0;
+  muestraPuntuacion();
+  desactivaBoton("nueva");
+  desactivaBoton("continuar");
+  activaBoton("dameCarta");
+  activaBoton("meplanto");
+  limpiaCartas();
+  ocultaMensajes("gameover");
+};
+
+const muestraPuntuacion = (): void => {
+  const marcador = document.getElementById("puntuacion");
   if (
-    nueva !== null &&
-    nueva !== undefined &&
-    nueva instanceof HTMLDivElement &&
-    botonExistente === null
+    marcador !== null &&
+    marcador !== undefined &&
+    marcador instanceof HTMLDivElement
   ) {
-    const button = document.createElement("button");
-    button.textContent = "Nueva partida"; // Asigna el texto al botón
-    button.className = "button-gold";
-    button.id = "nuevaPartida";
-    button.onclick = () => location.reload(); // Asigna el evento click antes de agregar el botón al DOM
-    nueva.appendChild(button); // Agrega el botón al div
+    marcador.textContent = "Puntuación:  " + puntuacion.toString();
   }
+};
+
+const pintaMensajes = (puntuacion: number): string => {
+  let mensaje: string = "";
+  if (puntuacion <= 4) {
+    mensaje = "Has sido muy conservador.";
+  } else if (puntuacion > 4 && puntuacion < 6) {
+    mensaje = "Te ha entrado el canguelo eh?";
+  } else if (puntuacion >= 6 && puntuacion <= 7) {
+    mensaje = "Casi casi..";
+  } else if (puntuacion === 7.5) {
+    mensaje = "Lo has clavado! ¡Enhorabuena!";
+  } else if (puntuacion > 7.5) {
+    mensaje = "Lo siento pero te has pasado. Has perdido!!";
+  }
+  return mensaje;
 };
 
 // MOSTRAR LOS MENSAJES Y DESACTIVAR LOS BOTONES AL PLANTARSE. DESPUÉS LLAMA A LA FUNCIÓN.. ¿QUE PASARÍA SI?
 const mePlanto = () => {
-  if (puntuacion <= 4) {
-    mensajeFinal("Has sido muy conservador.");
-  } else if (puntuacion > 4 && puntuacion < 6) {
-    mensajeFinal("Te ha entrado el canguelo eh?");
-  } else if (puntuacion >= 6 && puntuacion <= 7) {
-    mensajeFinal("Casi casi..");
-  } else if (puntuacion === 7.5) {
-    mensajeFinal("Lo has clavado! ¡Enhorabuena!");
-  }
+  let mensaje: string = pintaMensajes(puntuacion);
+  mensajeFinal(mensaje);
   desactivaBoton("dameCarta");
   desactivaBoton("meplanto");
-  nuevaPartida();
-  whatIf();
+  activaBoton("nueva");
+  activaBoton("continuar");
 };
 
+// QUE PASARÍA SI HUBIERA SEGUIDO.
 const whatIf = () => {
-  const seguir = document.getElementById("nuevoBoton2");
-  if (
-    seguir !== null &&
-    seguir !== undefined &&
-    seguir instanceof HTMLDivElement
-  ) {
-    const button = document.createElement("button");
-    button.textContent = "y si..?"; // Asigna el texto al botón
-    button.className = "button-silver";
-    button.id = "whatif";
-    button.onclick = () => dameCarta(); // Asigna el evento click antes de agregar el botón al DOM
-    seguir.appendChild(button); // Agrega el botón al div
-  }
+  activaBoton("dameCarta");
 };
 
 // MUESTRA MENSAJE Y DESACTIVA EL BOTÓN.
 const gameOver = () => {
-  const mensaje = document.getElementById("gameover");
-  if (
-    mensaje !== null &&
-    mensaje !== undefined &&
-    mensaje instanceof HTMLDivElement
-  ) {
-    mensaje.textContent = "Lo siento pero te has pasado!! Has perdido.";
-  }
+  let mensaje: string = pintaMensajes(puntuacion);
+  mensajeFinal(mensaje);
   desactivaBoton("dameCarta");
   desactivaBoton("meplanto");
+  desactivaBoton("continuar");
+  activaBoton("nueva");
 };
 
-// SEGÚN EL NÚMERO RECIBIDO LLAMA A LA FUNCIÓN QUE PINTA LA CARTA CORRESPONDIENTE.
-const muestraCarta = (carta: number) => {
-  let puntuacion: boolean = false;
-  switch (carta) {
-    case 1:
-      pintaCarta(cartas[1]);
-      puntuacion = sumaPuntuacion("1");
-      muestraPuntuacion();
-      break;
-    case 2:
-      pintaCarta(cartas[2]);
-      puntuacion = sumaPuntuacion("2");
-      muestraPuntuacion();
-      break;
-    case 3:
-      pintaCarta(cartas[3]);
-      puntuacion = sumaPuntuacion("3");
-      muestraPuntuacion();
-      break;
-    case 4:
-      pintaCarta(cartas[4]);
-      puntuacion = sumaPuntuacion("4");
-      muestraPuntuacion();
-      break;
-    case 5:
-      pintaCarta(cartas[5]);
-      puntuacion = sumaPuntuacion("5");
-      muestraPuntuacion();
-      break;
-    case 6:
-      pintaCarta(cartas[6]);
-      puntuacion = sumaPuntuacion("6");
-      muestraPuntuacion();
-      break;
-    case 7:
-      pintaCarta(cartas[7]);
-      puntuacion = sumaPuntuacion("7");
-      muestraPuntuacion();
-      break;
-    case 10:
-      pintaCarta(cartas[10]);
-      puntuacion = sumaPuntuacion("0.5");
-      muestraPuntuacion();
-      break;
-    case 11:
-      pintaCarta(cartas[11]);
-      puntuacion = sumaPuntuacion("0.5");
-      muestraPuntuacion();
-      break;
-    case 12:
-      pintaCarta(cartas[12]);
-      puntuacion = sumaPuntuacion("0.5");
-      muestraPuntuacion();
-      break;
-  }
-  return puntuacion;
-};
-
-// MANEJADOR DE EVENTOS.
+// MANEJADOR DE EVENTOS. MANEJAMOS LOS 4 BOTONES.
 const manejaEventos = (): void => {
   const botonCarta = document.getElementById("dameCarta");
   if (
@@ -221,9 +206,28 @@ const manejaEventos = (): void => {
   ) {
     botonPlanto.addEventListener("click", mePlanto);
   }
+  const botonNueva = document.getElementById("nueva");
+  if (
+    botonNueva !== null &&
+    botonNueva !== undefined &&
+    botonNueva instanceof HTMLButtonElement
+  ) {
+    botonNueva.addEventListener("click", nuevaPartida);
+  }
+  const seguir = document.getElementById("continuar");
+  if (
+    seguir !== null &&
+    seguir !== undefined &&
+    seguir instanceof HTMLButtonElement
+  ) {
+    seguir.addEventListener("click", whatIf);
+  }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  muestraPuntuacion();
   manejaEventos();
+  muestraPuntuacion();
+  // AL CARGAR LA PÁGINA DESACTIVAMOS Y OCULTAMOS LOS BOTONES DE NUEVA PARTIDA Y DE Y..SI.. PARA MOSTRARLOS CUANDO TOQUE.
+  desactivaBoton("nueva");
+  desactivaBoton("continuar");
 });
