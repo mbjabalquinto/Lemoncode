@@ -13,8 +13,6 @@ let cartas: Record<number, string> = {
   12: "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/12_rey-copas.jpg",
 };
 
-// FUNCION PARA MOSTRAR LA PUNTUACIÓN EN PANTALLA.
-
 // GENERA UN NÚMERO DE CARTA AL AZAR EVITANDO EL 8 Y EL 9 CUANDO SE PULSA EL BOTÓN.
 
 const generaNumeroAleatorio = (): number => {
@@ -25,6 +23,7 @@ const valorCarta = (numeroAleatorio: number): number => {
   return numeroAleatorio <= 7 ? numeroAleatorio : numeroAleatorio + 2;
 };
 
+// ES LLAMADA AL PULSAR EL BOTÓN DAME CARTA. OBTIENE EL VALOR ALEATORIO, OBTIENE LA URL DE LA CARTA Y LLAMA A LAS FUNCIONES.
 const dameCarta = (): void => {
   const numeroAleatorio: number = generaNumeroAleatorio();
   const valor: number = valorCarta(numeroAleatorio);
@@ -32,7 +31,7 @@ const dameCarta = (): void => {
   pintaCarta(carta);
   sumaPuntuacion(valor);
   muestraPuntuacion();
-
+  // CONTROLA SI SE HA PASADO O SI LO HA CLAVADO. EN ESTOS DOS CASOS NO ESPERA QUE SE PULSE EL BOTÓN.
   if (puntuacion > 7.5) {
     gameOver();
   } else if (puntuacion === 7.5) {
