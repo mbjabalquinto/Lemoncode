@@ -1,6 +1,11 @@
 :root {
   --size: 1rem;
 }
+* {
+  background-color: #ffffff;
+  max-width: 1024px;
+  margin: 0 auto;
+}
 
 body {
   display: flex;
@@ -9,7 +14,7 @@ body {
 }
 
 img {
-  max-width: 70%;
+  max-height: 250px;
   height: auto;
 }
 
@@ -31,7 +36,7 @@ img {
   flex-direction: row;
   align-items: center;
   background-color: #fff;
-  width: 920px;
+  width: 360px;
   margin: 15px;
   justify-content: space-evenly;
 }
