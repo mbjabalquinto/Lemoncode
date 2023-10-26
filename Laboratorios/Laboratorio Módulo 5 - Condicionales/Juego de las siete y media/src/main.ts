@@ -31,11 +31,14 @@ const dameCarta = (): void => {
   pintaCarta(carta);
   sumaPuntuacion(valor);
   muestraPuntuacion();
-  // CONTROLA SI SE HA PASADO O SI LO HA CLAVADO. EN ESTOS DOS CASOS NO ESPERA QUE SE PULSE EL BOTÓN.
+  controlaEstadoPartida(puntuacion);
+};
+// CONTROLA SI SE HA PASADO O SI LO HA CLAVADO. EN ESTOS DOS CASOS NO ESPERA QUE SE PULSE EL BOTÓN.
+const controlaEstadoPartida = (puntuacion: number) => {
   if (puntuacion > 7.5) {
     gameOver();
   } else if (puntuacion === 7.5) {
-    mePlanto();
+    hasGanado();
     desactivaBoton("continuar");
   }
 };
@@ -130,7 +133,7 @@ const nuevaPartida = () => {
   limpiaCartas();
   ocultaMensajes("gameover");
 };
-
+// MUESTRA EL MENSAJE CON LA PUNTUACIÓN EN PANTALLA.
 const muestraPuntuacion = (): void => {
   const marcador = document.getElementById("puntuacion");
   if (
@@ -141,7 +144,7 @@ const muestraPuntuacion = (): void => {
     marcador.textContent = "Puntuación:  " + puntuacion.toString();
   }
 };
-
+// PINTA EL MENSAJE CORRESPONDIENTE SEGÚN LA PUNTUACIÓN.
 const pintaMensajes = (puntuacion: number): string => {
   let mensaje: string = "";
   if (puntuacion <= 4) {
@@ -167,10 +170,18 @@ const mePlanto = () => {
   activaBoton("nueva");
   activaBoton("continuar");
 };
-
+// LÓGICA DE CUANDO SE GANA LA PARTIDA.
+const hasGanado = () => {
+  let mensaje: string = pintaMensajes(puntuacion);
+  mensajeFinal(mensaje);
+  desactivaBoton("dameCarta");
+  desactivaBoton("meplanto");
+  desactivaBoton("continuar");
+  activaBoton("nueva");
+};
 // QUE PASARÍA SI HUBIERA SEGUIDO.
 const whatIf = () => {
-  activaBoton("dameCarta");
+  dameCarta();
 };
 
 // MUESTRA MENSAJE Y DESACTIVA EL BOTÓN.
