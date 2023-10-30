@@ -1,5 +1,10 @@
 import { datos } from "./modelo";
-import { obtenerCarta, teHasPasado, loHasClavado } from "./motor";
+import {
+  obtenerCarta,
+  teHasPasado,
+  loHasClavado,
+  pintaMensajes,
+} from "./motor";
 
 // ES LLAMADA EN MAIN AL CARGAR EL DOM.
 export const partida = (): void => {
@@ -83,23 +88,6 @@ export const limpiaCartas = (): void => {
   }
 };
 
-// PINTA EL MENSAJE CORRESPONDIENTE SEGÚN LA PUNTUACIÓN.
-export const pintaMensajes = (): string => {
-  let mensaje: string = "";
-  if (datos.puntuacion <= 4) {
-    mensaje = "Has sido muy conservador.";
-  } else if (datos.puntuacion > 4 && datos.puntuacion < 6) {
-    mensaje = "Te ha entrado el canguelo eh?";
-  } else if (datos.puntuacion >= 6 && datos.puntuacion <= 7) {
-    mensaje = "Casi casi..";
-  } else if (datos.puntuacion === 7.5) {
-    mensaje = "Lo has clavado! ¡Enhorabuena!";
-  } else if (datos.puntuacion > 7.5) {
-    mensaje = "Lo siento pero te has pasado. Has perdido!!";
-  }
-  return mensaje;
-};
-
 // MUESTRA EL MENSAJE AL PLANTARSE.
 export const mensajeFinal = (texto: string): void => {
   const mensaje = document.getElementById("gameover");
@@ -169,4 +157,3 @@ export const mePlanto = () => {
   activaBoton("nueva");
   activaBoton("continuar");
 };
-

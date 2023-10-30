@@ -18,13 +18,3 @@ interface Datos {
 export let datos: Datos = {
   puntuacion: 0,
 };
-
-// GENERA UN NÚMERO DE CARTA AL AZAR EVITANDO EL 8 Y EL 9 CUANDO SE PULSA EL BOTÓN.
-
-export const generaNumeroAleatorio = (): number => {
-  return Math.floor(Math.random() * 10) + 1;
-};
-
-export const valorCarta = (numeroAleatorio: number): number => {
-  return numeroAleatorio <= 7 ? numeroAleatorio : numeroAleatorio + 2;
-};
