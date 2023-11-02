@@ -84,7 +84,7 @@ describe("sumaPuntuacion", () => {
     // Assert
     expect(datos.puntuacion).toBe(1.5);
   });
-  it("Si el número es distinto de 10, 11 o 12 debería sumar el número a datos.puntuacion", () => {
+  it("Si el número es distinto de 10, 11 o 12 debería sumar dicho número a datos.puntuacion", () => {
     // Arrange
     // Act
     sumaPuntuacion(1);
