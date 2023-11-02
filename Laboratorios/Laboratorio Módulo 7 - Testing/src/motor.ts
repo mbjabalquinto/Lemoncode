@@ -1,16 +1,16 @@
 import { datos, cartas } from "./modelo";
 
 // GENERA UN NÚMERO DE CARTA AL AZAR EVITANDO EL 8 Y EL 9 CUANDO SE PULSA EL BOTÓN.
-const generaNumeroAleatorio = (): number => {
+export const generaNumeroAleatorio = (): number => {
   return Math.floor(Math.random() * 10) + 1;
 };
 
-const valorCarta = (numeroAleatorio: number): number => {
+export const valorCarta = (numeroAleatorio: number): number => {
   return numeroAleatorio <= 7 ? numeroAleatorio : numeroAleatorio + 2;
 };
 
 // FUNCION PARA SUMAR LA PUNTUACIÓN CADA VEZ QUE SE PIDE UNA NUEVA CARTA.
-export const sumaPuntuacion = (numero: number) => {
+export const sumaPuntuacion = (numero: number): void => {
   if (numero === 10 || numero === 11 || numero === 12) {
     datos.puntuacion = datos.puntuacion + 0.5;
   } else {
