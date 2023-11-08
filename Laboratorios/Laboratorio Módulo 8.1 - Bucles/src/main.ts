@@ -1,66 +1,196 @@
-interface Ropa {
-  foto: string;
-  tipoProducto: string;
-  precio: number;
+type Especialidad = "Medico de familia" | "Pediatra" | "Cardiólogo";
+
+interface Pacientes {
+  id: number;
+  nombre: string;
+  apellidos: string;
+  sexo: string;
+  temperatura: number;
+  frecuenciaCardiaca: number;
+  especialidad: Especialidad;
+  edad: number;
 }
 
-const ropa: Ropa[] = [
+const pacientes: Pacientes[] = [
   {
-    foto: "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/online-shop/images/image-1.jpg",
-    tipoProducto: "Camisa",
-    precio: 25,
+    id: 1,
+    nombre: "John",
+    apellidos: "Doe",
+    sexo: "Male",
+    temperatura: 36.8,
+    frecuenciaCardiaca: 80,
+    especialidad: "Medico de familia",
+    edad: 44,
   },
   {
-    foto: "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/online-shop/images/image-2.jpg",
-    tipoProducto: "Camiseta",
-    precio: 22.99,
+    id: 2,
+    nombre: "Jane",
+    apellidos: "Doe",
+    sexo: "Female",
+    temperatura: 36.8,
+    frecuenciaCardiaca: 70,
+    especialidad: "Medico de familia",
+    edad: 43,
   },
   {
-    foto: "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/online-shop/images/image-3.jpg",
-    tipoProducto: "Vestido",
-    precio: 34.99,
+    id: 3,
+    nombre: "Junior",
+    apellidos: "Doe",
+    sexo: "Male",
+    temperatura: 36.8,
+    frecuenciaCardiaca: 90,
+    especialidad: "Pediatra",
+    edad: 8,
   },
   {
-    foto: "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/online-shop/images/image-4.jpg",
-    tipoProducto: "Vaqueros",
-    precio: 79.99,
+    id: 4,
+    nombre: "Mary",
+    apellidos: "Wien",
+    sexo: "Female",
+    temperatura: 36.8,
+    frecuenciaCardiaca: 120,
+    especialidad: "Medico de familia",
+    edad: 20,
   },
   {
-    foto: "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/online-shop/images/image-5.jpg",
-    tipoProducto: "Polo",
-    precio: 44.95,
+    id: 5,
+    nombre: "Scarlett",
+    apellidos: "Somez",
+    sexo: "Female",
+    temperatura: 36.8,
+    frecuenciaCardiaca: 110,
+    especialidad: "Cardiólogo",
+    edad: 30,
   },
   {
-    foto: "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/online-shop/images/image-6.jpg",
-    tipoProducto: "Camisa",
-    precio: 44.99,
+    id: 6,
+    nombre: "Brian",
+    apellidos: "Kid",
+    sexo: "Male",
+    temperatura: 39.8,
+    frecuenciaCardiaca: 80,
+    especialidad: "Pediatra",
+    edad: 11,
   },
 ];
 
-const pintaRopa = (ropa: Ropa): void => {
-  const div = document.getElementById("lista-ropa");
-  const imagen = document.createElement("img");
-  const tipoProducto = document.createElement("p");
-  const precio = document.createElement("p");
-  const cardDiv = document.createElement("div");
-
-  imagen.src = ropa.foto;
-  tipoProducto.textContent = ropa.tipoProducto;
-  precio.textContent = `${ropa.precio} €`;
-  cardDiv.setAttribute("class", "card");
-
-  if (div !== null && div !== undefined && div instanceof HTMLDivElement) {
-    div.appendChild(cardDiv);
-    cardDiv.appendChild(imagen);
-    cardDiv.appendChild(tipoProducto);
-    cardDiv.appendChild(precio);
+// APARTADO 1
+const obtenPacientesAsignadosAPediatria = (
+  pacientes: Pacientes[]
+): Pacientes[] => {
+  let pacientesDePediatria: Pacientes[] = [];
+  for (let i = 0; i < pacientes.length; i++) {
+    if (pacientes[i].especialidad === "Pediatra") {
+      pacientesDePediatria.push(pacientes[i]);
+    }
   }
+  return pacientesDePediatria;
 };
 
-const muestraColeccionDePrendas = (): void => {
-  for (let i = 0; i < ropa.length; i++) {
-    pintaRopa(ropa[i]);
+const pacientesDePediatria = obtenPacientesAsignadosAPediatria(pacientes);
+console.log(pacientesDePediatria);
+
+const obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios = (
+  pacientes: Pacientes[]
+): Pacientes[] => {
+  let pacientesDePediatria: Pacientes[] = [];
+  for (let i = 0; i < pacientes.length; i++) {
+    if (pacientes[i].especialidad === "Pediatra" && pacientes[i].edad < 10) {
+      pacientesDePediatria.push(pacientes[i]);
+    }
   }
+  return pacientesDePediatria;
 };
 
-document.addEventListener("DOMContentLoaded", muestraColeccionDePrendas);
+const pacientesDePediatriaMenoresDe10Anios =
+  obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios(pacientes);
+console.log(pacientesDePediatriaMenoresDe10Anios);
+
+// APARTADO 2
+
+const activarProtocoloUrgencia = (pacientes: Pacientes[]): boolean => {
+  let activarProctolo = false;
+
+  for (let i = 0; i < pacientes.length; i++) {
+    if (
+      pacientes[i].frecuenciaCardiaca > 100 &&
+      pacientes[i].temperatura > 39
+    ) {
+      activarProctolo = true;
+      break;
+    }
+  }
+  return activarProctolo;
+};
+
+let urgencia = activarProtocoloUrgencia(pacientes);
+console.log(urgencia);
+
+// APARTADO 3
+
+const reasignaPacientesAMedicoFamilia = (
+  pacientes: Pacientes[]
+): Pacientes[] => {
+  let pacientesReasignados: Pacientes[] = [];
+  for (let i = 0; i < pacientes.length; i++) {
+    if (pacientes[i].especialidad === "Pediatra") {
+      const elementoReasignado: Pacientes = {
+        ...pacientes[i],
+        especialidad: "Medico de familia",
+      };
+      pacientesReasignados = [...pacientesReasignados, elementoReasignado];
+    }
+  }
+  return pacientesReasignados;
+};
+
+const pacientesReasignados = reasignaPacientesAMedicoFamilia(pacientes);
+console.log(pacientesReasignados);
+
+// APARTADO 4
+
+const HayPacientesDePediatria = (pacientes: Pacientes[]): boolean => {
+  let hayPacientesPediatria = false;
+  for (let i = 0; i < pacientes.length; i++) {
+    if (pacientes[i].especialidad === "Pediatra") {
+      hayPacientesPediatria = true;
+    }
+  }
+  return hayPacientesPediatria;
+};
+
+const pediatraACasa = HayPacientesDePediatria(pacientes);
+console.log(pediatraACasa);
+
+// APARTADO 5
+
+interface NumeroPacientesPorEspecialidad {
+  medicoDeFamilia: number;
+  pediatria: number;
+  cardiologia: number;
+}
+
+const cuentaPacientesPorEspecialidad = (
+  pacientes: Pacientes[]
+): NumeroPacientesPorEspecialidad => {
+  let recuentoPacientes: NumeroPacientesPorEspecialidad = {
+    medicoDeFamilia: 0,
+    pediatria: 0,
+    cardiologia: 0,
+  };
+  for (let i = 0; i < pacientes.length; i++) {
+    if (pacientes[i].especialidad === "Cardiólogo") {
+      recuentoPacientes.cardiologia += 1;
+    } else if (pacientes[i].especialidad === "Medico de familia") {
+      recuentoPacientes.medicoDeFamilia += 1;
+    } else if (pacientes[i].especialidad === "Pediatra") {
+      recuentoPacientes.pediatria += 1;
+    }
+  }
+
+  return recuentoPacientes;
+};
+
+const recuentoPacientesPorEspecialidad =
+  cuentaPacientesPorEspecialidad(pacientes);
+console.log(recuentoPacientesPorEspecialidad);
