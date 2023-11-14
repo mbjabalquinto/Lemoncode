@@ -1,6 +1,6 @@
 type Especialidad = "Medico de familia" | "Pediatra" | "Cardiólogo";
 
-interface Pacientes {
+export interface Pacientes {
   id: number;
   nombre: string;
   apellidos: string;
@@ -75,12 +75,12 @@ export const pacientes: Pacientes[] = [
 ];
 
 // APARTADO 1
-const obtenPacientesAsignadosAPediatria: Pacientes[] = pacientes.filter(
+export const obtenPacientesAsignadosAPediatria: Pacientes[] = pacientes.filter(
   (paciente: Pacientes): boolean => paciente.especialidad === "Pediatra"
 );
 console.log(obtenPacientesAsignadosAPediatria);
 
-const obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios: Pacientes[] =
+export const obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios: Pacientes[] =
   pacientes.filter(
     (paciente: Pacientes): boolean =>
       paciente.especialidad === "Pediatra" && paciente.edad < 10
