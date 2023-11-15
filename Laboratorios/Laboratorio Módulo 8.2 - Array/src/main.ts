@@ -88,21 +88,20 @@ export const obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios: Pacientes[] =
 console.log(obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios);
 
 // APARTADO 2
-const activarProtocoloUrgencia: Pacientes | undefined = pacientes.find(
+export const activarProtocoloUrgencia: Pacientes | undefined = pacientes.find(
   (paciente: Pacientes): boolean =>
     paciente.frecuenciaCardiaca > 100 && paciente.temperatura > 39
 );
 console.log(activarProtocoloUrgencia);
 
 // APARTADO 3
-const reasignaPacientesAMedicoFamilia = obtenPacientesAsignadosAPediatria.map(
-  (paciente: Pacientes) => {
+export const reasignaPacientesAMedicoFamilia: Pacientes[] =
+  obtenPacientesAsignadosAPediatria.map((paciente: Pacientes) => {
     return {
       ...paciente,
       especialidad: "Medico de familia",
     };
-  }
-);
+  });
 console.log(reasignaPacientesAMedicoFamilia);
 
 // APARTADO 4
@@ -118,7 +117,7 @@ interface NumeroPacientesPorEspecialidad {
   cardiologia: number;
 }
 
-const cuentaPacientesPorEspecialidad: NumeroPacientesPorEspecialidad =
+export const cuentaPacientesPorEspecialidad: NumeroPacientesPorEspecialidad =
   pacientes.reduce(
     (
       acum: NumeroPacientesPorEspecialidad,
