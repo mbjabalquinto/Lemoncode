@@ -9,8 +9,61 @@
     <title>myflix</title>
   </head>
   <body>
-    <h1>MyFlix</h1>
-    <div id="lista-ropa" class="contenedor"></div>
+    <div class="container">
+      <header>
+        <nav>
+          <div class="container-header">
+            <img
+              src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/d22bc91b32387cd3d8fd227bf7cba8c90ee0e532/mflix/mflix-logo.svg"
+              alt="logo MFlix"
+            />
+            <ul>
+              <li>Inicio</li>
+              <li>Series</li>
+              <li>Peliculas</li>
+              <li>Mas recientes</li>
+              <li>Mi lista</li>
+            </ul>
+          </div>
+        </nav>
+        <div class="hero">
+          <h1>Películas y series ilimitadas</h1>
+          <p>Disfruta en tu TV, computadora, tablet o móvil.</p>
+          <button>Comenzar</button>
+        </div>
+      </header>
+      <div class="principal" id="principal">
+        <h2>Familiar</h2>
+        <div class="lista-peliculas" id="lista-peliculas">
+          <div class="flecha-izquierda">
+            <img
+              src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/7f4b7d5a25593dd2d2857f2aaa467c5fd87b5cbb/mflix/flecha-izquierda.svg"
+            />
+          </div>
+          <div class="flecha-derecha">
+            <img
+              src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/7f4b7d5a25593dd2d2857f2aaa467c5fd87b5cbb/mflix/flecha-derecha.svg"
+            />
+          </div>
+          <div class="peliculas-contenedor">
+            <div class="pelicula" id="pelicula">
+              <img
+                src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/mflix/babe.png"
+                alt="Babe el cerdito valiente"
+              />
+              <h3>Babe el cerdito valiente</h3>
+            </div>
+            <div class="pelicula" id="pelicula">
+              <img
+                src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/mflix/intocable.png"
+                alt="Intocable"
+              />
+              <h3>Intocable</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
