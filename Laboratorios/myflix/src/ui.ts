@@ -1,4 +1,4 @@
-import { Pelicula } from "./modelo";
+import { Pelicula, nombreClases } from "./modelo";
 
 const crearTitulo = (tituloSeccion: string): HTMLHeadingElement => {
   const titulo = document.createElement("h2");
@@ -22,7 +22,7 @@ export const pintarPeliculas = (
   // comprobar que existe
   if (appDiv && appDiv instanceof HTMLDivElement) {
     // crear un div para las películas
-    const creaDivPeliculas = crearContenedor("peliculas");
+    const creaDivPeliculas = crearContenedor(nombreClases.peliculas);
     // añadimos el div de películas al div principal
     appDiv.appendChild(creaDivPeliculas);
     // crear título
@@ -30,17 +30,19 @@ export const pintarPeliculas = (
     // añadir el título al div de películas
     creaDivPeliculas.appendChild(titulo);
     // crear div lista de peliculas
-    const divListaPeliculas = crearContenedor("lista-peliculas");
+    const divListaPeliculas = crearContenedor(nombreClases.listaPeliculas);
     // añadir div lista de plículas al div de peliculas
     creaDivPeliculas.appendChild(divListaPeliculas);
     // crear div contenedor de películas
-    const divPeliculasContenedor = crearContenedor("peliculas-contenedor");
+    const divPeliculasContenedor = crearContenedor(
+      nombreClases.peliculasContenedor
+    );
     // añadir div contenedor de Pelicas al div lista de peliculas
     divListaPeliculas.appendChild(divPeliculasContenedor);
     // pintar películas
     listaPeliculas.forEach((pelicula) => {
       // crear div película
-      const divPelicula = crearContenedor("pelicula");
+      const divPelicula = crearContenedor(nombreClases.pelicula);
       // añadir datos a la pelicula
       divPelicula.innerHTML = `
 <img src="${pelicula.imagen}" alt="${pelicula.titulo}" />
