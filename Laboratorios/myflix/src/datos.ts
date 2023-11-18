@@ -1,4 +1,4 @@
-import { Pelicula } from "./src/modelo";
+import { Pelicula } from "./modelo";
 
 export const peliculas: Pelicula[] = [
   {
@@ -43,7 +43,7 @@ export const peliculas: Pelicula[] = [
     premioGalardon: false,
     fechaEstreno: new Date("1990-12-21"),
     imagen:
-      "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/mflix/poliguarderia.png",
+      "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/mflix/poli-guarderia.png",
   },
   {
     titulo: "El príncipe de Zamunda",
