@@ -1,4 +1,5 @@
-import { Pelicula, nombreClases } from "./modelo";
+import { flechas } from "./constantes";
+import { Pelicula, nombreClases, TipoFlecha } from "./modelo";
 
 const crearTitulo = (tituloSeccion: string): HTMLHeadingElement => {
   const titulo = document.createElement("h2");
@@ -13,7 +14,7 @@ const crearContenedor = (nombreClase: string): HTMLDivElement => {
   return listaPeliculas;
 };
 
-export const pintarPeliculas = (
+export const pintarListaPeliculas = (
   tituloSeccion: string,
   listaPeliculas: Pelicula[]
 ): void => {
@@ -39,6 +40,11 @@ export const pintarPeliculas = (
     );
     // añadir div contenedor de Pelicas al div lista de peliculas
     divListaPeliculas.appendChild(divPeliculasContenedor);
+
+    // añadir flechas
+    añadirFlecha(divPeliculasContenedor, "izquierda");
+    añadirFlecha(divPeliculasContenedor, "derecha");
+
     // pintar películas
     listaPeliculas.forEach((pelicula) => {
       // crear div película
@@ -54,4 +60,28 @@ export const pintarPeliculas = (
   } else {
     console.error("No se encontró el elemento");
   }
+};
+
+const añadirFlecha = (contenedor: HTMLDivElement, tipo: TipoFlecha): void => {
+  const divFlecha = document.createElement("div");
+  divFlecha.className = `flecha-${tipo}`;
+
+  const imgFlecha = document.createElement("img");
+  imgFlecha.src = tipo === "derecha" ? flechas.left : flechas.right;
+  divFlecha.appendChild(imgFlecha);
+
+  divFlecha.addEventListener("click", () => {
+    if (tipo === "izquierda") {
+      contenedor.scrollBy({
+        left: -contenedor.clientWidth,
+        behavior: "smooth",
+      });
+    } else {
+      contenedor.scrollBy({
+        left: contenedor.clientWidth,
+        behavior: "smooth",
+      });
+    }
+  });
+  contenedor.appendChild(divFlecha);
 };

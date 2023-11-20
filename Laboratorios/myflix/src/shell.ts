@@ -1,6 +1,6 @@
 import { peliculas } from "./datos";
-import { pintarPeliculas } from "./ui";
+import { pintarListaPeliculas } from "./ui";
 
 document.addEventListener("DOMContentLoaded", () => {
-  pintarPeliculas("Todas las peliculas", peliculas);
+  pintarListaPeliculas("Todas las peliculas", peliculas);
 });

@@ -22,3 +22,5 @@ export const nombreClases: NombreClases = {
   peliculasContenedor: "peliculas-contenedor",
   pelicula: "pelicula",
 };
+
+export type TipoFlecha = "izquierda" | "derecha";
