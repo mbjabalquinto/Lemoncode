@@ -89,7 +89,11 @@ export const pintarListaPeliculas = (
     pintarFlechas(divPeliculasContenedor);
 
     // pintar películas
-    pintarPeliculas(listaPeliculas, divPeliculasContenedor);
+    const peliculasFiltradas = filtrarPeliculas(
+      listaPeliculas,
+      configuracion.filtro
+    );
+    pintarPeliculas(peliculasFiltradas, divPeliculasContenedor);
   } else {
     console.error("No se encontró el elemento");
   }
