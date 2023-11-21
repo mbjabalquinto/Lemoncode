@@ -25,7 +25,11 @@ export const nombreClases: NombreClases = {
 
 export type TipoFlecha = "izquierda" | "derecha";
 
-type TipoCaracteristica = "genero";
+type TipoCaracteristica =
+  | "genero"
+  | "premioGalardon"
+  | "masVisto"
+  | "calificacionImdb";
 
 export type tipoGenero = "Familiar" | "Aventuras" | "Animacion";
 
