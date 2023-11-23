@@ -1,0 +1,45 @@
+* {
+  margin: 10;
+  padding: 10;
+}
+body {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background-color: #141414;
+}
+
+.contenedor-principal {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.contenedor-elementos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.elemento {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border: solid;
+  border-radius: 12%;
+  background-color: lightskyblue;
+  width: 170px;
+  height: 200px;
+}
+
+.elemento-sideB {
+  background-color: blueviolet;
+}
+
+.carta {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
