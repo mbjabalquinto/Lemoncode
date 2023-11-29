@@ -1,16 +1,16 @@
 * {
-  margin: 10;
-  padding: 10;
+  margin: 5px;
+  padding: 1px;
 }
 body {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 50px;
   background-color: #141414;
 }
 
 .contenedor-principal {
-  display: flex;
+  display: grid;
   justify-content: center;
-  margin-top: 100px;
 }
 
 .contenedor-elementos {
@@ -28,9 +28,13 @@ body {
   cursor: pointer;
   border: solid;
   border-radius: 12%;
-  background-color: lightskyblue;
+  background-color: silver;
   width: 170px;
   height: 200px;
+}
+
+.elemento-activo {
+  background-color: lightskyblue;
 }
 
 .elemento-sideB {
@@ -42,4 +46,29 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.button {
+  appearance: none;
+  font-size: 0.9em;
+  font-weight: bold;
+  border: 0px;
+  border-radius: 0.3em;
+  padding: 0.3em;
+  cursor: pointer;
+  margin: 20px;
+  background-color: grey;
+}
+
+.button:hover,
+.button:active {
+  background-color: white;
+}
+
+h1 {
+  color: silver;
+}
+
+.elemento-activo:hover {
+  border-color: lightskyblue;
 }

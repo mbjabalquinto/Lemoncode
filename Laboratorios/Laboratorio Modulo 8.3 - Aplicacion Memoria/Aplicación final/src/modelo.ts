@@ -1,4 +1,4 @@
-export interface Cartas {
+export interface Carta {
   idFoto: number;
   imagen: string;
   estaVuelta: boolean;
@@ -10,7 +10,21 @@ interface InfoCarta {
   imagen: string;
 }
 
-const infoCartas: InfoCarta[] = [
+type EstadoPartida =
+  | "partidaNoIniciada"
+  | "ceroCartasLevantadas"
+  | "unaCartaLevantada"
+  | "dosCartasLevantadas"
+  | "partidaCompletada";
+
+export interface Tablero {
+  cartas: Carta[];
+  estadoPartida: EstadoPartida;
+  indiceCartaVolteadaA?: number;
+  indiceCartaVolteadaB?: number;
+}
+
+export const infoCartas: InfoCarta[] = [
   {
     idFoto: 1,
     imagen:
@@ -43,7 +57,7 @@ const infoCartas: InfoCarta[] = [
   },
 ];
 
-export const cartas: Cartas[] = [
+export const cartas: Carta[] = [
   {
     idFoto: 1,
     imagen:
