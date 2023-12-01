@@ -20,6 +20,11 @@ body {
   gap: 5px;
 }
 
+.contenedor-elementos-oculto {
+  opacity: 0;
+  transition: opacity 2s;
+}
+
 .elemento {
   margin: 0 auto;
   display: flex;

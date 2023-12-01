@@ -9,6 +9,7 @@ import {
   parejaEncontrada,
   parejaNoEncontrada,
   hayDosCartasLevantadas,
+  esPartidaCompleta,
 } from "./motor";
 
 import { Tablero, cartas } from "./modelo";
@@ -57,32 +58,36 @@ const cambiaClaseDeTodasLasCartas = (): void => {
   }
 };
 
+const deshabilitarInteraccion = (contenedor: HTMLElement) => {
+  contenedor.style.pointerEvents = "none";
+};
+
+const habilitarInteraccion = (contenedor: HTMLElement) => {
+  contenedor.style.pointerEvents = "";
+};
+
 const compruebaPareja = (tablero: Tablero) => {
-  if (tablero.indiceCartaVolteadaA && tablero.indiceCartaVolteadaB) {
-    if (
-      sonPareja(
-        tablero.indiceCartaVolteadaA,
-        tablero.indiceCartaVolteadaB,
-        tablero
-      )
-    ) {
-      parejaEncontrada(
-        tablero.indiceCartaVolteadaA,
-        tablero.indiceCartaVolteadaB,
-        tablero
-      );
+  const indiceA = tablero.indiceCartaVolteadaA;
+  const indiceB = tablero.indiceCartaVolteadaB;
+  if (indiceA !== undefined && indiceB !== undefined) {
+    if (sonPareja(indiceA, indiceB, tablero)) {
+      parejaEncontrada(indiceA, indiceB, tablero);
+      console.log("son pareja");
     } else {
-      parejaNoEncontrada(
-        tablero.indiceCartaVolteadaA,
-        tablero.indiceCartaVolteadaB,
-        tablero
-      );
-      setTimeout(() => {
-        quitaSrcCarta(tablero.indiceCartaVolteadaA);
-        quitaSrcCarta(tablero.indiceCartaVolteadaB);
-        cambiaClaseCarta(tablero.indiceCartaVolteadaA);
-        cambiaClaseCarta(tablero.indiceCartaVolteadaB);
-      }, 1000);
+      parejaNoEncontrada(indiceA, indiceB, tablero);
+      console.log("pareja no encontrada");
+      // Controlamos que no se cuelen clics durante el setTimeOut.
+      const contenedor = document.getElementById("contenedor-elementos");
+      if (contenedor) {
+        deshabilitarInteraccion(contenedor);
+        setTimeout(() => {
+          quitaSrcCarta(indiceA);
+          quitaSrcCarta(indiceB);
+          cambiaClaseCarta(indiceA);
+          cambiaClaseCarta(indiceB);
+          habilitarInteraccion(contenedor);
+        }, 1000);
+      }
     }
   }
 };
@@ -108,6 +113,39 @@ const compruebaCarta = (tablero: Tablero, indice: number) => {
     cambiaSrcCarta(tablero, indice);
     cambiaClaseCarta(indice);
   }
+  console.log(tablero);
+  console.log(`Indice: ${indice}`);
+};
+
+const cambiaClaseContenedorDeCartas = () => {
+  const contenedor = document.getElementById("contenedor-elementos");
+  if (
+    contenedor !== null &&
+    contenedor !== undefined &&
+    contenedor instanceof HTMLDivElement
+  ) {
+    contenedor.classList.add("contenedor-elementos-oculto");
+  }
+};
+
+const insertaFelicitacion = (ruta: string) => {
+  const felicitacion = document.getElementById("felicitacion");
+  if (
+    felicitacion !== null &&
+    felicitacion !== undefined &&
+    felicitacion instanceof HTMLImageElement
+  ) {
+    felicitacion.src = ruta;
+  }
+};
+
+const finalizaPartida = (tablero: Tablero): void => {
+  tablero.estadoPartida = "partidaCompletada";
+  setTimeout(() => {
+    cambiaClaseContenedorDeCartas();
+  }, 2000);
+
+  insertaFelicitacion("../images/avatar.png");
 };
 
 const controlaElJuego = (tablero: Tablero, indice: number) => {
@@ -116,7 +154,11 @@ const controlaElJuego = (tablero: Tablero, indice: number) => {
   actualizaIndices(tablero, indice);
   actualizaEstadoPartida(tablero);
   if (hayDosCartasLevantadas(tablero)) {
+    console.log("hay dos cartas levantadas");
     compruebaPareja(tablero);
+  }
+  if (esPartidaCompleta(tablero)) {
+    finalizaPartida(tablero);
   }
 };
 
