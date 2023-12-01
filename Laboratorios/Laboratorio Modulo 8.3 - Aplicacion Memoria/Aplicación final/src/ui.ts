@@ -5,6 +5,9 @@ import {
   voltearCarta,
   actualizaEstadoPartida,
   actualizaIndices,
+  sonPareja,
+  parejaEncontrada,
+  parejaNoEncontrada,
 } from "./motor";
 
 import { Tablero, cartas } from "./modelo";
@@ -36,6 +39,13 @@ const cambiaSrcCarta = (tablero: Tablero, indice: number): void => {
   }
 };
 
+const quitaSrcCarta = (indice: number): void => {
+  const carta = document.getElementById(`img${indice}`);
+  if (compruebaElementoHtmlImg(carta)) {
+    carta.src = "";
+  }
+};
+
 // Cambio el color de las cartas al pulsar el botón nueva partida
 const cambiaClaseDeTodasLasCartas = (): void => {
   for (let indice = 0; indice < 12; indice++) {
@@ -46,16 +56,53 @@ const cambiaClaseDeTodasLasCartas = (): void => {
   }
 };
 
+const compruebaEstadoPartida = (tablero: Tablero, indice: number) => {
+  if (
+    tablero.estadoPartida === "dosCartasLevantadas" &&
+    tablero.indiceCartaVolteadaA &&
+    tablero.indiceCartaVolteadaB
+  ) {
+    if (
+      sonPareja(
+        tablero.indiceCartaVolteadaA,
+        tablero.indiceCartaVolteadaB,
+        tablero
+      )
+    ) {
+      parejaEncontrada(
+        tablero.indiceCartaVolteadaA,
+        tablero.indiceCartaVolteadaB,
+        tablero
+      );
+    } else {
+      parejaNoEncontrada(
+        tablero.indiceCartaVolteadaA,
+        tablero.indiceCartaVolteadaB,
+        tablero
+      );
+      setTimeout(() => {
+        quitaSrcCarta(indice);
+      }, 1000);
+      cambiaClaseCarta(indice);
+    }
+  }
+};
+
 // Cambio la clase del div para cambiar el color de fondo al mostrar la carta
 const cambiaClaseCarta = (indice: number) => {
   const carta = document.getElementById(`carta${indice}`);
   if (compruebaElementoHtmlDiv(carta)) {
-    carta.classList.add("elemento-sideB");
+    if (carta.classList.contains("elemento-activo")) {
+      carta.classList.remove("elemento-activo");
+      carta.classList.add("elemento-sideB");
+    } else if (carta.classList.contains("elemento-sideB")) {
+      carta.classList.remove("elemento-sideB");
+      carta.classList.add("elemento-activo");
+    }
   }
 };
 
 const compruebaCarta = (tablero: Tablero, indice: number) => {
-  // Acción cuando se pincha una carta
   // Primero comprobamos si la carta es volteable y la volteamos en caso afirmativo
   if (sePuedeVoltearLaCarta(tablero, indice)) {
     voltearCarta(tablero, indice);
@@ -64,6 +111,12 @@ const compruebaCarta = (tablero: Tablero, indice: number) => {
     actualizaIndices(tablero, indice);
     actualizaEstadoPartida(tablero);
   }
+};
+
+const controlaElJuego = (tablero: Tablero, indice: number) => {
+  // Acción cuando se pincha una carta
+  compruebaCarta(tablero, indice);
+  compruebaEstadoPartida(tablero, indice);
 };
 
 // Mientras no se pulse inicar partida, no habrá respuesta si pinchan sobre las cartas.
@@ -91,7 +144,7 @@ const controladorDeEventosDeCartas = (tablero: Tablero): void => {
       if (target !== null && target !== undefined) {
         let indice = Number(target.dataset.indiceArray);
         console.log(indice);
-        compruebaCarta(tablero, indice);
+        controlaElJuego(tablero, indice);
       }
     });
   });

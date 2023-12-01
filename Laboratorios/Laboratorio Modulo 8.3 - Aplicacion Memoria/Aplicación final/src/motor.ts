@@ -62,26 +62,35 @@ export const actualizaIndices = (tablero: Tablero, indice: number): void => {
   }
 };
 
-/*
 export const sonPareja = (
   indiceA: number,
   indiceB: number,
   tablero: Tablero
-): boolean => {};
+): boolean => {
+  return tablero.cartas[indiceA].idFoto === tablero.cartas[indiceB].idFoto
+    ? true
+    : false;
+};
 
-const parejaEncontrada = (
-  tablero: Tablero,
+export const parejaEncontrada = (
   indiceA: number,
-  indiceB: number
-): void => {};
+  indiceB: number,
+  tablero: Tablero
+): void => {
+  tablero.cartas[indiceA].encontrada = true;
+  tablero.cartas[indiceB].encontrada = true;
+  tablero.estadoPartida = "ceroCartasLevantadas";
+};
 
-const parejaNoEncontrada = (
-  tablero: Tablero,
+export const parejaNoEncontrada = (
   indiceA: number,
-  indiceB: number
-): void => {};
+  indiceB: number,
+  tablero: Tablero
+): void => {
+  tablero.cartas[indiceA].estaVuelta = false;
+  tablero.cartas[indiceB].estaVuelta = false;
+};
 
-*/
 export const esPartidaCompleta = (tablero: Tablero): boolean =>
   tablero.cartas.every((carta) => carta.encontrada);
 
