@@ -89,6 +89,7 @@ export const parejaNoEncontrada = (
 ): void => {
   tablero.cartas[indiceA].estaVuelta = false;
   tablero.cartas[indiceB].estaVuelta = false;
+  tablero.estadoPartida = "ceroCartasLevantadas";
 };
 
 export const esPartidaCompleta = (tablero: Tablero): boolean =>
@@ -106,4 +107,8 @@ export const actualizaEstadoPartida = (tablero: Tablero): void => {
   } else if (tablero.estadoPartida === "dosCartasLevantadas") {
     tablero.estadoPartida = "ceroCartasLevantadas";
   }
+};
+
+export const hayDosCartasLevantadas = (tablero: Tablero): boolean => {
+  return tablero.estadoPartida === "dosCartasLevantadas" ? true : false;
 };

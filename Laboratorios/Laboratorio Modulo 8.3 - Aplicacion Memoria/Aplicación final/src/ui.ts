@@ -8,6 +8,7 @@ import {
   sonPareja,
   parejaEncontrada,
   parejaNoEncontrada,
+  hayDosCartasLevantadas,
 } from "./motor";
 
 import { Tablero, cartas } from "./modelo";
@@ -56,12 +57,8 @@ const cambiaClaseDeTodasLasCartas = (): void => {
   }
 };
 
-const compruebaEstadoPartida = (tablero: Tablero, indice: number) => {
-  if (
-    tablero.estadoPartida === "dosCartasLevantadas" &&
-    tablero.indiceCartaVolteadaA &&
-    tablero.indiceCartaVolteadaB
-  ) {
+const compruebaPareja = (tablero: Tablero) => {
+  if (tablero.indiceCartaVolteadaA && tablero.indiceCartaVolteadaB) {
     if (
       sonPareja(
         tablero.indiceCartaVolteadaA,
@@ -81,9 +78,11 @@ const compruebaEstadoPartida = (tablero: Tablero, indice: number) => {
         tablero
       );
       setTimeout(() => {
-        quitaSrcCarta(indice);
+        quitaSrcCarta(tablero.indiceCartaVolteadaA);
+        quitaSrcCarta(tablero.indiceCartaVolteadaB);
+        cambiaClaseCarta(tablero.indiceCartaVolteadaA);
+        cambiaClaseCarta(tablero.indiceCartaVolteadaB);
       }, 1000);
-      cambiaClaseCarta(indice);
     }
   }
 };
@@ -108,15 +107,17 @@ const compruebaCarta = (tablero: Tablero, indice: number) => {
     voltearCarta(tablero, indice);
     cambiaSrcCarta(tablero, indice);
     cambiaClaseCarta(indice);
-    actualizaIndices(tablero, indice);
-    actualizaEstadoPartida(tablero);
   }
 };
 
 const controlaElJuego = (tablero: Tablero, indice: number) => {
   // Acción cuando se pincha una carta
   compruebaCarta(tablero, indice);
-  compruebaEstadoPartida(tablero, indice);
+  actualizaIndices(tablero, indice);
+  actualizaEstadoPartida(tablero);
+  if (hayDosCartasLevantadas(tablero)) {
+    compruebaPareja(tablero);
+  }
 };
 
 // Mientras no se pulse inicar partida, no habrá respuesta si pinchan sobre las cartas.
