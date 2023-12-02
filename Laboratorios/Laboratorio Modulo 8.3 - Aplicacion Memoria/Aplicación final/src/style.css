@@ -77,3 +77,8 @@ h1 {
 .elemento-activo:hover {
   border-color: lightskyblue;
 }
+
+.avatar {
+  opacity: 1;
+  transition: opacity 4s;
+}

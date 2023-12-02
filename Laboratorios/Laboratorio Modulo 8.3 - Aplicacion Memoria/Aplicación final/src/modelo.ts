@@ -5,6 +5,9 @@ export interface Carta {
   encontrada: boolean;
 }
 
+export const fotoFinal: string =
+  "https://raw.githubusercontent.com/mbjabalquinto/Lemoncode/main/Laboratorios/Laboratorio%20Modulo%208.3%20-%20Aplicacion%20Memoria/Aplicaci%C3%B3n%20final/images/avatar.png";
+
 interface InfoCarta {
   idFoto: number;
   imagen: string;

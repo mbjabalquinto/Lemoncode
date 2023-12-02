@@ -12,7 +12,7 @@ import {
   esPartidaCompleta,
 } from "./motor";
 
-import { Tablero, cartas } from "./modelo";
+import { Tablero, cartas, fotoFinal } from "./modelo";
 
 const compruebaElementoHtmlDiv = (
   contenedor: HTMLElement | null
@@ -66,16 +66,36 @@ const habilitarInteraccion = (contenedor: HTMLElement) => {
   contenedor.style.pointerEvents = "";
 };
 
+const desactivaBotonNuevaPartida = () => {
+  const boton = document.getElementById("start");
+  if (
+    boton !== null &&
+    boton !== undefined &&
+    boton instanceof HTMLInputElement
+  ) {
+    deshabilitarInteraccion(boton);
+  }
+};
+
+const activaBotonNuevaPartida = () => {
+  const boton = document.getElementById("start");
+  if (
+    boton !== null &&
+    boton !== undefined &&
+    boton instanceof HTMLInputElement
+  ) {
+    habilitarInteraccion(boton);
+  }
+};
+
 const compruebaPareja = (tablero: Tablero) => {
   const indiceA = tablero.indiceCartaVolteadaA;
   const indiceB = tablero.indiceCartaVolteadaB;
   if (indiceA !== undefined && indiceB !== undefined) {
     if (sonPareja(indiceA, indiceB, tablero)) {
       parejaEncontrada(indiceA, indiceB, tablero);
-      console.log("son pareja");
     } else {
       parejaNoEncontrada(indiceA, indiceB, tablero);
-      console.log("pareja no encontrada");
       // Controlamos que no se cuelen clics durante el setTimeOut.
       const contenedor = document.getElementById("contenedor-elementos");
       if (contenedor) {
@@ -113,8 +133,6 @@ const compruebaCarta = (tablero: Tablero, indice: number) => {
     cambiaSrcCarta(tablero, indice);
     cambiaClaseCarta(indice);
   }
-  console.log(tablero);
-  console.log(`Indice: ${indice}`);
 };
 
 const cambiaClaseContenedorDeCartas = () => {
@@ -124,7 +142,11 @@ const cambiaClaseContenedorDeCartas = () => {
     contenedor !== undefined &&
     contenedor instanceof HTMLDivElement
   ) {
-    contenedor.classList.add("contenedor-elementos-oculto");
+    if (!contenedor.classList.contains("contenedor-elementos-oculto")) {
+      contenedor.classList.add("contenedor-elementos-oculto");
+    } else if (contenedor.classList.contains("contenedor-elementos-oculto")) {
+      contenedor.classList.remove("contenedor-elementos-oculto");
+    }
   }
 };
 
@@ -139,13 +161,24 @@ const insertaFelicitacion = (ruta: string) => {
   }
 };
 
+const ocultaFelicitacion = () => {
+  const felicitacion = document.getElementById("felicitacion");
+  if (
+    felicitacion !== null &&
+    felicitacion !== undefined &&
+    felicitacion instanceof HTMLImageElement
+  ) {
+    felicitacion.src = "";
+  }
+};
+
 const finalizaPartida = (tablero: Tablero): void => {
   tablero.estadoPartida = "partidaCompletada";
   setTimeout(() => {
-    cambiaClaseContenedorDeCartas();
+    insertaFelicitacion(fotoFinal);
   }, 2000);
-
-  insertaFelicitacion("../images/avatar.png");
+  cambiaClaseContenedorDeCartas();
+  activaBotonNuevaPartida();
 };
 
 const controlaElJuego = (tablero: Tablero, indice: number) => {
@@ -154,7 +187,6 @@ const controlaElJuego = (tablero: Tablero, indice: number) => {
   actualizaIndices(tablero, indice);
   actualizaEstadoPartida(tablero);
   if (hayDosCartasLevantadas(tablero)) {
-    console.log("hay dos cartas levantadas");
     compruebaPareja(tablero);
   }
   if (esPartidaCompleta(tablero)) {
@@ -172,6 +204,10 @@ export const comenzarPartida = () => {
   controladorDeEventosDeCartas(tablero);
   // Cambio la clase de todos los divs para el efecto inicial de partida
   cambiaClaseDeTodasLasCartas();
+  // Pongo visible el contenedor de las cartas (se oculta al finalizar la partida).
+  ocultaFelicitacion();
+  cambiaClaseContenedorDeCartas();
+  desactivaBotonNuevaPartida();
 };
 
 const controladorDeEventosDeCartas = (tablero: Tablero): void => {
@@ -182,11 +218,9 @@ const controladorDeEventosDeCartas = (tablero: Tablero): void => {
     indiceCarta.addEventListener("click", (event) => {
       // Obtén el elemento que ha sido clicado
       let target = event.target as HTMLElement;
-      console.log(target);
       // Lee el valor del atributo data-indice-array
       if (target !== null && target !== undefined) {
         let indice = Number(target.dataset.indiceArray);
-        console.log(indice);
         controlaElJuego(tablero, indice);
       }
     });
