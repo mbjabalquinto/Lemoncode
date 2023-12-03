@@ -8,9 +8,22 @@ body {
   background-color: #141414;
 }
 
+img {
+  transition: opacity 2s;
+}
+
+img.ocultar {
+  opacity: 0;
+}
+
 .contenedor-principal {
   display: grid;
   justify-content: center;
+}
+
+.cabecera {
+  display: flex;
+  justify-content: space-between;
 }
 
 .contenedor-elementos {
@@ -46,11 +59,27 @@ body {
   background-color: blueviolet;
 }
 
+.elemento-activo,
+.elemento-sideB {
+  transition: background-color 2s;
+}
+
 .carta {
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.contador {
+  appearance: none;
+  font-size: 0.9em;
+  font-weight: bold;
+  border: 0px;
+  border-radius: 0.3em;
+  padding: 0.3em;
+  margin: 20px;
+  background-color: grey;
 }
 
 .button {

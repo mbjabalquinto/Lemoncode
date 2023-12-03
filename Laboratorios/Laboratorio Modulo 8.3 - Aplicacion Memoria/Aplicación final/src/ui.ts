@@ -1,5 +1,4 @@
 import {
-  iniciaPartida,
   nuevoTablero,
   sePuedeVoltearLaCarta,
   voltearCarta,
@@ -10,9 +9,11 @@ import {
   parejaNoEncontrada,
   hayDosCartasLevantadas,
   esPartidaCompleta,
+  actualizaContador,
+  reseteaContador,
 } from "./motor";
 
-import { Tablero, cartas, fotoFinal } from "./modelo";
+import { Tablero, cartas, fotoFinal, contador } from "./modelo";
 
 const compruebaElementoHtmlDiv = (
   contenedor: HTMLElement | null
@@ -34,26 +35,54 @@ const compruebaElementoHtmlImg = (
   );
 };
 
+const pintaContador = (): void => {
+  const intentos = document.getElementById("contador");
+  if (compruebaElementoHtmlDiv(intentos)) {
+    intentos.textContent = `Intentos: ${contador.valor}`;
+  }
+};
+
+const reseteaImagenes = () => {
+  for (let i = 0; i < 12; i++) {
+    const imagen = document.getElementById(`img${i}`);
+    if (
+      imagen !== null &&
+      imagen !== undefined &&
+      imagen instanceof HTMLImageElement
+    ) {
+      imagen.src = "";
+    }
+  }
+};
+
 const cambiaSrcCarta = (tablero: Tablero, indice: number): void => {
   const carta = document.getElementById(`img${indice}`);
   if (compruebaElementoHtmlImg(carta)) {
     carta.src = tablero.cartas[indice].imagen;
+    carta.classList.remove("ocultar");
   }
 };
 
 const quitaSrcCarta = (indice: number): void => {
   const carta = document.getElementById(`img${indice}`);
   if (compruebaElementoHtmlImg(carta)) {
-    carta.src = "";
+    carta.classList.add("ocultar");
+    setTimeout(() => {
+      carta.src = "";
+    }, 2000);
   }
 };
 
 // Cambio el color de las cartas al pulsar el botón nueva partida
-const cambiaClaseDeTodasLasCartas = (): void => {
+const cambiaClaseDeTodasLasCartas = (tablero: Tablero): void => {
   for (let indice = 0; indice < 12; indice++) {
     const carta = document.getElementById(`carta${indice}`);
-    if (compruebaElementoHtmlDiv(carta)) {
+    if (
+      compruebaElementoHtmlDiv(carta) &&
+      tablero.estadoPartida === "ceroCartasLevantadas"
+    ) {
       carta.classList.add("elemento-activo");
+      carta.classList.remove("elemento-sideB");
     }
   }
 };
@@ -106,7 +135,7 @@ const compruebaPareja = (tablero: Tablero) => {
           cambiaClaseCarta(indiceA);
           cambiaClaseCarta(indiceB);
           habilitarInteraccion(contenedor);
-        }, 1000);
+        }, 2000);
       }
     }
   }
@@ -135,16 +164,16 @@ const compruebaCarta = (tablero: Tablero, indice: number) => {
   }
 };
 
-const cambiaClaseContenedorDeCartas = () => {
+const cambiaClaseContenedorDeCartas = (tablero: Tablero) => {
   const contenedor = document.getElementById("contenedor-elementos");
   if (
     contenedor !== null &&
     contenedor !== undefined &&
     contenedor instanceof HTMLDivElement
   ) {
-    if (!contenedor.classList.contains("contenedor-elementos-oculto")) {
+    if (tablero.estadoPartida === "partidaCompletada") {
       contenedor.classList.add("contenedor-elementos-oculto");
-    } else if (contenedor.classList.contains("contenedor-elementos-oculto")) {
+    } else {
       contenedor.classList.remove("contenedor-elementos-oculto");
     }
   }
@@ -177,7 +206,7 @@ const finalizaPartida = (tablero: Tablero): void => {
   setTimeout(() => {
     insertaFelicitacion(fotoFinal);
   }, 2000);
-  cambiaClaseContenedorDeCartas();
+  cambiaClaseContenedorDeCartas(tablero);
   activaBotonNuevaPartida();
 };
 
@@ -188,6 +217,8 @@ const controlaElJuego = (tablero: Tablero, indice: number) => {
   actualizaEstadoPartida(tablero);
   if (hayDosCartasLevantadas(tablero)) {
     compruebaPareja(tablero);
+    actualizaContador();
+    pintaContador();
   }
   if (esPartidaCompleta(tablero)) {
     finalizaPartida(tablero);
@@ -196,18 +227,19 @@ const controlaElJuego = (tablero: Tablero, indice: number) => {
 
 // Mientras no se pulse inicar partida, no habrá respuesta si pinchan sobre las cartas.
 export const comenzarPartida = () => {
-  // Creo el tablero
   const tablero = nuevoTablero(cartas);
-  // Inicio la partida
-  iniciaPartida(tablero);
-  // Comiendo a contorlar los clicks sobre las cartas
-  controladorDeEventosDeCartas(tablero);
-  // Cambio la clase de todos los divs para el efecto inicial de partida
-  cambiaClaseDeTodasLasCartas();
   // Pongo visible el contenedor de las cartas (se oculta al finalizar la partida).
   ocultaFelicitacion();
-  cambiaClaseContenedorDeCartas();
+  cambiaClaseContenedorDeCartas(tablero);
+  // Desactivo boton de nueva partida hasta que esta finalice
   desactivaBotonNuevaPartida();
+  reseteaImagenes();
+  reseteaContador();
+  pintaContador();
+  // Cambio la clase de todos los divs para el efecto inicial de partida
+  cambiaClaseDeTodasLasCartas(tablero);
+  // Comiendo a contorlar los clicks sobre las cartas
+  controladorDeEventosDeCartas(tablero);
 };
 
 const controladorDeEventosDeCartas = (tablero: Tablero): void => {
@@ -215,7 +247,13 @@ const controladorDeEventosDeCartas = (tablero: Tablero): void => {
   let indiceCartas = document.querySelectorAll(".elemento");
   // Añade el mismo controlador de eventos a todas las cartas
   indiceCartas.forEach((indiceCarta) => {
-    indiceCarta.addEventListener("click", (event) => {
+    // Primero, elimina el controlador de eventos existente
+    let nuevoIndiceCarta = indiceCarta.cloneNode(true);
+    if (indiceCarta.parentNode) {
+      indiceCarta.parentNode.replaceChild(nuevoIndiceCarta, indiceCarta);
+    }
+    // Luego, añade el nuevo controlador de eventos
+    nuevoIndiceCarta.addEventListener("click", (event) => {
       // Obtén el elemento que ha sido clicado
       let target = event.target as HTMLElement;
       // Lee el valor del atributo data-indice-array

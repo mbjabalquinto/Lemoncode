@@ -1,4 +1,4 @@
-import { Carta, Tablero } from "./modelo";
+import { Carta, Tablero, contador } from "./modelo";
 
 export const barajarCartas = (cartas: Carta[]): Carta[] => {
   let currentIndex = cartas.length;
@@ -18,12 +18,32 @@ export const barajarCartas = (cartas: Carta[]): Carta[] => {
   return cartas;
 };
 
+export const actualizaContador = (): void => {
+  contador.valor++;
+};
+
+export const reseteaContador = (): void => {
+  contador.valor = 0;
+};
+
+const reseteaObjetoCartas = (cartas: Carta[]): Carta[] => {
+  const nuevasCartas = cartas.map((carta) => ({
+    ...carta,
+    estaVuelta: false,
+    encontrada: false,
+  }));
+  return nuevasCartas;
+};
+
 // Creo el tablero con las cartas ya barajadas y lo devuelvo.
 export const nuevoTablero = (cartas: Carta[]): Tablero => {
+  cartas = reseteaObjetoCartas(cartas);
   barajarCartas(cartas);
   const tablero: Tablero = {
     cartas: barajarCartas(cartas),
-    estadoPartida: "partidaNoIniciada",
+    estadoPartida: "ceroCartasLevantadas",
+    indiceCartaVolteadaA: undefined,
+    indiceCartaVolteadaB: undefined,
   };
   return tablero;
 };
@@ -94,10 +114,11 @@ export const parejaNoEncontrada = (
 
 export const esPartidaCompleta = (tablero: Tablero): boolean =>
   tablero.cartas.every((carta) => carta.encontrada);
-
+/*
 export const iniciaPartida = (tablero: Tablero): void => {
   tablero.estadoPartida = "ceroCartasLevantadas";
 };
+*/
 
 export const actualizaEstadoPartida = (tablero: Tablero): void => {
   if (tablero.estadoPartida === "ceroCartasLevantadas") {
