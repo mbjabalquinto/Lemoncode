@@ -152,3 +152,10 @@ export const cartas: Carta[] = [
     encontrada: false,
   },
 ];
+
+export const tablero: Tablero = {
+  cartas: cartas,
+  estadoPartida: "partidaNoIniciada",
+  indiceCartaVolteadaA: undefined,
+  indiceCartaVolteadaB: undefined,
+};

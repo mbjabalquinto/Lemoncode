@@ -1,6 +1,6 @@
-import { Carta, Tablero, contador } from "./modelo";
+import { contador, cartas, tablero } from "./modelo";
 
-export const barajarCartas = (cartas: Carta[]): Carta[] => {
+export const barajarCartas = (): void => {
   let currentIndex = cartas.length;
   let temporaryValue, randomIndex;
 
@@ -15,7 +15,6 @@ export const barajarCartas = (cartas: Carta[]): Carta[] => {
     cartas[currentIndex] = cartas[randomIndex];
     cartas[randomIndex] = temporaryValue;
   }
-  return cartas;
 };
 
 export const actualizaContador = (): void => {
@@ -26,33 +25,18 @@ export const reseteaContador = (): void => {
   contador.valor = 0;
 };
 
-const reseteaObjetoCartas = (cartas: Carta[]): Carta[] => {
-  const nuevasCartas = cartas.map((carta) => ({
-    ...carta,
-    estaVuelta: false,
-    encontrada: false,
-  }));
-  return nuevasCartas;
-};
-
-// Creo el tablero con las cartas ya barajadas y lo devuelvo.
-export const nuevoTablero = (cartas: Carta[]): Tablero => {
-  cartas = reseteaObjetoCartas(cartas);
-  barajarCartas(cartas);
-  const tablero: Tablero = {
-    cartas: barajarCartas(cartas),
-    estadoPartida: "ceroCartasLevantadas",
-    indiceCartaVolteadaA: undefined,
-    indiceCartaVolteadaB: undefined,
-  };
-  return tablero;
+export const reseteaObjetoCartas = () => {
+  for (let i = 0; i < cartas.length; i++) {
+    cartas[i] = {
+      ...cartas[i],
+      estaVuelta: false,
+      encontrada: false,
+    };
+  }
 };
 
 // Comprobamos si la carta ha sido encontrada, si ya está vuelta y si hay cartas ya levantadas en este turno
-export const sePuedeVoltearLaCarta = (
-  tablero: Tablero,
-  indice: number
-): boolean => {
+export const sePuedeVoltearLaCarta = (indice: number): boolean => {
   let respuesta: boolean = false;
   if (
     !tablero.cartas[indice].encontrada &&
@@ -67,60 +51,52 @@ export const sePuedeVoltearLaCarta = (
   } else {
     respuesta = false;
   }
+
   return respuesta;
 };
 
-export const voltearCarta = (tablero: Tablero, indice: number): void => {
+export const voltearCarta = (indice: number): void => {
   tablero.cartas[indice].estaVuelta = true;
 };
 
-export const actualizaIndices = (tablero: Tablero, indice: number): void => {
+export const actualizaIndices = (indice: number): void => {
   if (tablero.estadoPartida === "ceroCartasLevantadas") {
     tablero.indiceCartaVolteadaA = indice;
+    console.log("actualizado indiceA");
   } else if (tablero.estadoPartida === "unaCartaLevantada") {
     tablero.indiceCartaVolteadaB = indice;
+    console.log("actualizado indiceB");
+  } else {
+    console.log("No se actualizaron los índices.");
   }
 };
 
-export const sonPareja = (
-  indiceA: number,
-  indiceB: number,
-  tablero: Tablero
-): boolean => {
+export const sonPareja = (indiceA: number, indiceB: number): boolean => {
   return tablero.cartas[indiceA].idFoto === tablero.cartas[indiceB].idFoto
     ? true
     : false;
 };
 
-export const parejaEncontrada = (
-  indiceA: number,
-  indiceB: number,
-  tablero: Tablero
-): void => {
+export const parejaEncontrada = (indiceA: number, indiceB: number): void => {
   tablero.cartas[indiceA].encontrada = true;
   tablero.cartas[indiceB].encontrada = true;
   tablero.estadoPartida = "ceroCartasLevantadas";
 };
 
-export const parejaNoEncontrada = (
-  indiceA: number,
-  indiceB: number,
-  tablero: Tablero
-): void => {
+export const parejaNoEncontrada = (indiceA: number, indiceB: number): void => {
   tablero.cartas[indiceA].estaVuelta = false;
   tablero.cartas[indiceB].estaVuelta = false;
   tablero.estadoPartida = "ceroCartasLevantadas";
 };
 
-export const esPartidaCompleta = (tablero: Tablero): boolean =>
+export const esPartidaCompleta = (): boolean =>
   tablero.cartas.every((carta) => carta.encontrada);
-/*
-export const iniciaPartida = (tablero: Tablero): void => {
+
+export const iniciaPartida = (): void => {
   tablero.estadoPartida = "ceroCartasLevantadas";
 };
-*/
 
-export const actualizaEstadoPartida = (tablero: Tablero): void => {
+export const actualizaEstadoPartida = (): void => {
   if (tablero.estadoPartida === "ceroCartasLevantadas") {
     tablero.estadoPartida = "unaCartaLevantada";
   } else if (tablero.estadoPartida === "unaCartaLevantada") {
@@ -130,6 +106,6 @@ export const actualizaEstadoPartida = (tablero: Tablero): void => {
   }
 };
 
-export const hayDosCartasLevantadas = (tablero: Tablero): boolean => {
+export const hayDosCartasLevantadas = (): boolean => {
   return tablero.estadoPartida === "dosCartasLevantadas" ? true : false;
 };

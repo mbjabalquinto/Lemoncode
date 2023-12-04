@@ -1,5 +1,6 @@
 import {
-  nuevoTablero,
+  reseteaObjetoCartas,
+  barajarCartas,
   sePuedeVoltearLaCarta,
   voltearCarta,
   actualizaEstadoPartida,
@@ -11,10 +12,12 @@ import {
   esPartidaCompleta,
   actualizaContador,
   reseteaContador,
+  iniciaPartida,
 } from "./motor";
 
-import { Tablero, cartas, fotoFinal, contador } from "./modelo";
+import { fotoFinal, contador, tablero } from "./modelo";
 
+// COMPROBAMOS ELEMENTOS HTML.
 const compruebaElementoHtmlDiv = (
   contenedor: HTMLElement | null
 ): contenedor is HTMLDivElement => {
@@ -35,6 +38,22 @@ const compruebaElementoHtmlImg = (
   );
 };
 
+// AVISAMOS SI HACEN CLIC SOBRE UNA CARTA YA VOLTEADA.
+const muestraAvisoCartaYaLevantada = (): void => {
+  const aviso = document.getElementById("aviso");
+  if (
+    aviso !== null &&
+    aviso !== undefined &&
+    aviso instanceof HTMLHeadingElement
+  ) {
+    aviso.textContent = "La carta que has pulsado ya se estaba mostrando.";
+    setTimeout(() => {
+      aviso.textContent = "";
+    }, 2000);
+  }
+};
+
+// MOSTRAMOS CONTADOR DE INTENTOS.
 const pintaContador = (): void => {
   const intentos = document.getElementById("contador");
   if (compruebaElementoHtmlDiv(intentos)) {
@@ -42,6 +61,7 @@ const pintaContador = (): void => {
   }
 };
 
+// BORRAMOS TODAS LAS IMÁGENES PARA REINICIAR EL TABLERO.
 const reseteaImagenes = () => {
   for (let i = 0; i < 12; i++) {
     const imagen = document.getElementById(`img${i}`);
@@ -55,11 +75,13 @@ const reseteaImagenes = () => {
   }
 };
 
-const cambiaSrcCarta = (tablero: Tablero, indice: number): void => {
+// MUESTRO/OCULTO CARTAS SEGÚN PROCEDA.
+const cambiaSrcCarta = (indice: number): void => {
   const carta = document.getElementById(`img${indice}`);
   if (compruebaElementoHtmlImg(carta)) {
     carta.src = tablero.cartas[indice].imagen;
     carta.classList.remove("ocultar");
+    console.log(carta.src);
   }
 };
 
@@ -69,12 +91,12 @@ const quitaSrcCarta = (indice: number): void => {
     carta.classList.add("ocultar");
     setTimeout(() => {
       carta.src = "";
-    }, 2000);
+    }, 1000);
   }
 };
 
 // Cambio el color de las cartas al pulsar el botón nueva partida
-const cambiaClaseDeTodasLasCartas = (tablero: Tablero): void => {
+const cambiaClaseDeTodasLasCartas = (): void => {
   for (let indice = 0; indice < 12; indice++) {
     const carta = document.getElementById(`carta${indice}`);
     if (
@@ -87,6 +109,7 @@ const cambiaClaseDeTodasLasCartas = (tablero: Tablero): void => {
   }
 };
 
+// ACTIVO/DESACTIVO LOS CLICS SOBRE LAS CARTAS SEGÚN LA SITUACIÓN DE LA PARTIDA.
 const deshabilitarInteraccion = (contenedor: HTMLElement) => {
   contenedor.style.pointerEvents = "none";
 };
@@ -95,6 +118,7 @@ const habilitarInteraccion = (contenedor: HTMLElement) => {
   contenedor.style.pointerEvents = "";
 };
 
+// DESACTIVO BOTÓN NUEVA PARTIDA.
 const desactivaBotonNuevaPartida = () => {
   const boton = document.getElementById("start");
   if (
@@ -106,6 +130,7 @@ const desactivaBotonNuevaPartida = () => {
   }
 };
 
+// REACTIVO BOTÓN NUEVA PARTIDA.
 const activaBotonNuevaPartida = () => {
   const boton = document.getElementById("start");
   if (
@@ -117,17 +142,20 @@ const activaBotonNuevaPartida = () => {
   }
 };
 
-const compruebaPareja = (tablero: Tablero) => {
+// COMPROBAMOS SIN SON PAREJA Y ACTUAMOS SEGÚN CADA CASO.
+const compruebaPareja = () => {
   const indiceA = tablero.indiceCartaVolteadaA;
   const indiceB = tablero.indiceCartaVolteadaB;
   if (indiceA !== undefined && indiceB !== undefined) {
-    if (sonPareja(indiceA, indiceB, tablero)) {
-      parejaEncontrada(indiceA, indiceB, tablero);
+    if (sonPareja(indiceA, indiceB)) {
+      parejaEncontrada(indiceA, indiceB);
+      console.log("pareja Encontrada");
     } else {
-      parejaNoEncontrada(indiceA, indiceB, tablero);
+      parejaNoEncontrada(indiceA, indiceB);
       // Controlamos que no se cuelen clics durante el setTimeOut.
       const contenedor = document.getElementById("contenedor-elementos");
       if (contenedor) {
+        console.log("pareja No encontrada");
         deshabilitarInteraccion(contenedor);
         setTimeout(() => {
           quitaSrcCarta(indiceA);
@@ -135,7 +163,7 @@ const compruebaPareja = (tablero: Tablero) => {
           cambiaClaseCarta(indiceA);
           cambiaClaseCarta(indiceB);
           habilitarInteraccion(contenedor);
-        }, 2000);
+        }, 1000);
       }
     }
   }
@@ -155,16 +183,20 @@ const cambiaClaseCarta = (indice: number) => {
   }
 };
 
-const compruebaCarta = (tablero: Tablero, indice: number) => {
-  // Primero comprobamos si la carta es volteable y la volteamos en caso afirmativo
-  if (sePuedeVoltearLaCarta(tablero, indice)) {
-    voltearCarta(tablero, indice);
-    cambiaSrcCarta(tablero, indice);
+// VOLTEAMOS LA CARTA EN CASO DE QUE SEA PROCEDENTE.
+const compruebaCarta = (indice: number) => {
+  if (sePuedeVoltearLaCarta(indice)) {
+    voltearCarta(indice);
     cambiaClaseCarta(indice);
+    cambiaSrcCarta(indice);
+    actualizaIndices(indice);
+    actualizaEstadoPartida();
+  } else if (tablero.estadoPartida !== "partidaNoIniciada") {
+    muestraAvisoCartaYaLevantada();
   }
 };
 
-const cambiaClaseContenedorDeCartas = (tablero: Tablero) => {
+const cambiaClaseContenedorDeCartas = (): void => {
   const contenedor = document.getElementById("contenedor-elementos");
   if (
     contenedor !== null &&
@@ -201,66 +233,84 @@ const ocultaFelicitacion = () => {
   }
 };
 
-const finalizaPartida = (tablero: Tablero): void => {
+const finalizaPartida = (): void => {
   tablero.estadoPartida = "partidaCompletada";
   setTimeout(() => {
     insertaFelicitacion(fotoFinal);
   }, 2000);
-  cambiaClaseContenedorDeCartas(tablero);
+  cambiaClaseContenedorDeCartas();
   activaBotonNuevaPartida();
 };
 
-const controlaElJuego = (tablero: Tablero, indice: number) => {
-  // Acción cuando se pincha una carta
-  compruebaCarta(tablero, indice);
-  actualizaIndices(tablero, indice);
-  actualizaEstadoPartida(tablero);
-  if (hayDosCartasLevantadas(tablero)) {
-    compruebaPareja(tablero);
+// SE EJECUTA AL CLICAR CADA CARTA.
+const controlaElJuego = (indice: number) => {
+  compruebaCarta(indice);
+  if (hayDosCartasLevantadas()) {
+    compruebaPareja();
     actualizaContador();
     pintaContador();
   }
-  if (esPartidaCompleta(tablero)) {
-    finalizaPartida(tablero);
+  if (esPartidaCompleta()) {
+    finalizaPartida();
   }
 };
 
-// Mientras no se pulse inicar partida, no habrá respuesta si pinchan sobre las cartas.
+// RESETEO LOS VALORES DEL TABLERO Y BARAJO LAS CARTAS.
+const nuevoTablero = () => {
+  reseteaObjetoCartas();
+  barajarCartas();
+  tablero.estadoPartida = "partidaNoIniciada";
+  tablero.indiceCartaVolteadaA = undefined;
+  tablero.indiceCartaVolteadaB = undefined;
+};
+
+// SE EJECUTA AL CLICAR EL BOTÓN DE NUEVA PARTIDA.
 export const comenzarPartida = () => {
-  const tablero = nuevoTablero(cartas);
+  nuevoTablero();
   // Pongo visible el contenedor de las cartas (se oculta al finalizar la partida).
   ocultaFelicitacion();
-  cambiaClaseContenedorDeCartas(tablero);
+  cambiaClaseContenedorDeCartas();
   // Desactivo boton de nueva partida hasta que esta finalice
   desactivaBotonNuevaPartida();
   reseteaImagenes();
   reseteaContador();
   pintaContador();
+  iniciaPartida();
   // Cambio la clase de todos los divs para el efecto inicial de partida
-  cambiaClaseDeTodasLasCartas(tablero);
-  // Comiendo a contorlar los clicks sobre las cartas
-  controladorDeEventosDeCartas(tablero);
+  cambiaClaseDeTodasLasCartas();
 };
 
-const controladorDeEventosDeCartas = (tablero: Tablero): void => {
+// EVENTOS DE LAS CARTAS.
+export const controladorDeEventosDeCartas = (): void => {
   // Obtén todos los índices de las cartas
   let indiceCartas = document.querySelectorAll(".elemento");
   // Añade el mismo controlador de eventos a todas las cartas
   indiceCartas.forEach((indiceCarta) => {
-    // Primero, elimina el controlador de eventos existente
-    let nuevoIndiceCarta = indiceCarta.cloneNode(true);
-    if (indiceCarta.parentNode) {
-      indiceCarta.parentNode.replaceChild(nuevoIndiceCarta, indiceCarta);
-    }
-    // Luego, añade el nuevo controlador de eventos
-    nuevoIndiceCarta.addEventListener("click", (event) => {
+    // Añade controlador de eventos
+    indiceCarta.addEventListener("click", (event) => {
       // Obtén el elemento que ha sido clicado
-      let target = event.target as HTMLElement;
+      // MUCHO OJO!! event.Target distingue si se hace clic sobre el div o sobre la imagen.. lo cual será un problema
+      // una vez esté volteada la carta. Se soluciona con event.currentTarget.
+      let target = event.currentTarget as HTMLElement;
       // Lee el valor del atributo data-indice-array
       if (target !== null && target !== undefined) {
         let indice = Number(target.dataset.indiceArray);
-        controlaElJuego(tablero, indice);
+        controlaElJuego(indice);
       }
     });
   });
+};
+
+// EVENTO DEL BOTÓN NUEVA PARTIDA
+export const controlaEventoBotonPartidaNueva = (): void => {
+  const boton = document.getElementById("start");
+  if (
+    boton !== null &&
+    boton !== undefined &&
+    boton instanceof HTMLInputElement
+  ) {
+    boton.addEventListener("click", comenzarPartida);
+  } else {
+    console.log("No se puede crear el evento.");
+  }
 };

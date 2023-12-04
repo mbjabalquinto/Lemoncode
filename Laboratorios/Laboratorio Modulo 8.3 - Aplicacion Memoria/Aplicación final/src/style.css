@@ -1,6 +1,5 @@
 * {
   margin: 5px;
-  padding: 1px;
 }
 body {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
@@ -69,6 +68,7 @@ img.ocultar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 9999;
 }
 
 .contador {
@@ -79,6 +79,7 @@ img.ocultar {
   border-radius: 0.3em;
   padding: 0.3em;
   margin: 20px;
+  margin-bottom: 0px;
   background-color: grey;
 }
 
@@ -91,6 +92,7 @@ img.ocultar {
   padding: 0.3em;
   cursor: pointer;
   margin: 20px;
+  margin-bottom: 0px;
   background-color: grey;
 }
 
@@ -101,6 +103,12 @@ img.ocultar {
 
 h1 {
   color: silver;
+}
+
+.aviso {
+  font-size: xx-large;
+  color: purple;
+  text-align: center;
 }
 
 .elemento-activo:hover {

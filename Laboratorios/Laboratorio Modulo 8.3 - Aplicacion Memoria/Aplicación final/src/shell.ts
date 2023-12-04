@@ -1,18 +1,9 @@
-import { comenzarPartida } from "./ui";
-
-const eventoStart = (): void => {
-  const boton = document.getElementById("start");
-  if (
-    boton !== null &&
-    boton !== undefined &&
-    boton instanceof HTMLInputElement
-  ) {
-    boton.addEventListener("click", comenzarPartida);
-  } else {
-    console.log("No se puede crear el evento.");
-  }
-};
+import {
+  controladorDeEventosDeCartas,
+  controlaEventoBotonPartidaNueva,
+} from "./ui";
 
 document.addEventListener("DOMContentLoaded", () => {
-  eventoStart();
+  controlaEventoBotonPartidaNueva();
+  controladorDeEventosDeCartas();
 });
