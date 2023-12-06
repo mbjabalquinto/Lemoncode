@@ -7,8 +7,8 @@ y ser numérico (sin separadores de miles ni nada)
 * @param {string} letra, de tipo string debe ser una letra mayúscula
 * @returns {boolean}
 */
-export function validarNIF(numero: number, letra: string) {
+export const validarNIF = (numero: number, letra: string): boolean => {
   const resto = obtenerResto(numero);
   const resultado = comprobarLetra(letra, resto);
   return resultado;
-}
+};

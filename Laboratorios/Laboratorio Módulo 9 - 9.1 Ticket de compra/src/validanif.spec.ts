@@ -13,4 +13,10 @@ describe("Validación de NIF", () => {
   ])("NIF: %s%s %s", (numero, letra, resultado) => {
     expect(validarNIF(numero, letra)).toBe(resultado);
   });
+
+  it("Lanza una excepcion si el NIF no tiene 8 dígitos", () => {
+    const numero = 5369957;
+    const letra = "Y";
+    expect(() => validarNIF(numero, letra)).toThrow();
+  });
 });
