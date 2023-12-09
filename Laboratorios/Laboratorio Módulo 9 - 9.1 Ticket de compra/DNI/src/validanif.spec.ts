@@ -19,4 +19,9 @@ describe("Validación de NIF", () => {
     const letra = "Y";
     expect(() => validarNIF(numero, letra)).toThrow();
   });
+  it("Lanza una expcepción si el NIF tiene mas de una letra", () => {
+    const numero = 53699578;
+    const letra = "YY";
+    expect(() => validarNIF(numero, letra)).toThrow();
+  });
 });
