@@ -1,4 +1,3 @@
-import { calcularNotaMediaAlumnos } from "./motor";
-import { fichaAlumnos } from "./modelo";
+//import { obtenerNotaMediaGlobal } from "./calcular-nota-final";
 
-console.log(calcularNotaMediaAlumnos(fichaAlumnos));
+//console.log(obtenerNotaMediaGlobal);

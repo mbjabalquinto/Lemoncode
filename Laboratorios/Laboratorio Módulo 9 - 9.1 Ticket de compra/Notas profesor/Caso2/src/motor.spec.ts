@@ -25,11 +25,13 @@ describe("calcularNotaMediaAlumnos", () => {
     const fichaAlumnos: FichaAlumno[] = [
       {
         alumno: "Juan Pérez",
-        notas: [7, 8, 9],
+        notaPracticas: [7, 9],
+        notaExamenes: [7, 8, 9],
       },
       {
         alumno: "María López",
-        notas: [6, 7, 8],
+        notaPracticas: [4, 6],
+        notaExamenes: [6, 7, 8],
       },
     ];
 
@@ -37,11 +39,13 @@ describe("calcularNotaMediaAlumnos", () => {
     const notasMedias: Notas[] = [
       {
         alumno: "Juan Pérez",
-        notaMedia: 8,
+        notaMediaPracticas: 8,
+        notaMediaExamenes: 6,
       },
       {
         alumno: "María López",
-        notaMedia: 7,
+        notaMediaPracticas: 7,
+        notaMediaExamenes: 5,
       },
     ];
 
