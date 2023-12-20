@@ -1,30 +1,20 @@
-//interface Excepciones {
-//  tipo: string;
-//  mensaje: string;
-//}
-// TODO: OBJETO PARA MANEJAR LAS EXCEPCIONES
-//const excepciones: Excepciones[] = [
-//  {
-//    tipo: "undefined",
-//    mensaje: "No se ha introducido una cadena",
-//  },
-//  {
-//    tipo: "null",
-//    mensaje: "No se ha introducido una cadena",
-//  },
-//  {
-//    tipo: "",
-//    mensaje: "La cadena está vacía",
-//  },
-//];
+interface Excepciones {
+  CADENA_NO_DEFINIDA: string;
+  CADENA_VACIA: string;
+}
+
+const excepciones: Excepciones = {
+  CADENA_NO_DEFINIDA: "No se ha introducido una cadena",
+  CADENA_VACIA: "La cadena está vacía",
+};
 
 // ELIMINAMOS EL ULTIMO CARACTER
 export const eliminaUltimoCaracter = (cadena: string): string => {
   if (cadena === undefined || cadena === null) {
-    throw new Error("No se ha introducido una cadena");
+    throw new Error(excepciones.CADENA_NO_DEFINIDA);
   }
   if (cadena === "") {
-    throw new Error("La cadena está vacía");
+    throw new Error(excepciones.CADENA_VACIA);
   }
   return cadena.slice(0, cadena.length - 1);
 };
@@ -32,10 +22,10 @@ export const eliminaUltimoCaracter = (cadena: string): string => {
 // OBTENEMOS EL ÚLTIMO CARACTER
 export const obtenerUltimoCaracter = (cadena: string): number => {
   if (cadena === undefined || cadena === null) {
-    throw new Error("No se ha introducido una cadena");
+    throw new Error(excepciones.CADENA_NO_DEFINIDA);
   }
   if (cadena === "") {
-    throw new Error("La cadena está vacía");
+    throw new Error(excepciones.CADENA_VACIA);
   }
   return Number(cadena.slice(cadena.length - 1));
 };
@@ -54,10 +44,10 @@ export const multiplicaPorDosSaltandoUno = (cadena: string): number[] => {
 // Multiplicamos por 2 los números del array comenzando por el final y solo uno si, uno no. Es decir los pares comenzando por 0 pero desde el final.
 export const multiplicaPorDosSaltandoUno = (cadena: string): number[] => {
   if (cadena === undefined || cadena === null) {
-    throw new Error("No se ha introducido una cadena");
+    throw new Error(excepciones.CADENA_NO_DEFINIDA);
   }
   if (cadena === "") {
-    throw new Error("La cadena está vacía");
+    throw new Error(excepciones.CADENA_VACIA);
   }
   let numero = cadena.split("").map(Number);
   numero = numero
