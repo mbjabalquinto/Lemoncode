@@ -2,6 +2,9 @@ import {
   eliminaUltimoCaracter,
   obtenerUltimoCaracter,
   multiplicaPorDosSaltandoUno,
+  sumaDecenasUnidadesColeccion,
+  sumaDigitos,
+  calculaFlagDeSumaTotal,
 } from "./master-card.helpers";
 
 describe("eliminaUltimoDigito", () => {
@@ -88,5 +91,63 @@ describe("multiplicaPorDosSaltandoUno", () => {
     const numeros = [2, 2, 6, 4, 10, 6, 14, 8, 18];
     const resultado = multiplicaPorDosSaltandoUno(cadena);
     expect(resultado).toEqual(numeros);
+  });
+});
+
+describe("sumaDecenasUnidadesColeccion", () => {
+  it("Debería devolver un throw si la entrada es undefined", () => {
+    const numeros: any = undefined;
+    const resultado = () => sumaDecenasUnidadesColeccion(numeros);
+    expect(resultado).toThrowError("No se ha introducido un número");
+  });
+  it("Debería devolver un throw si la entrada es nulo", () => {
+    const numeros: any = null;
+    const resultado = () => sumaDecenasUnidadesColeccion(numeros);
+    expect(resultado).toThrowError("No se ha introducido un número");
+  });
+  it("Recibe un array de numeros y los digitos dobles debe devolverlos sumados", () => {
+    const numeros = [2, 2, 6, 4, 10, 6, 14, 8, 18];
+    const resultadoEsperado = [2, 2, 6, 4, 1, 6, 5, 8, 9];
+    const resultado = sumaDecenasUnidadesColeccion(numeros);
+    expect(resultadoEsperado).toEqual(resultado);
+  });
+});
+
+describe("sumaDigitos", () => {
+  it("Debería devolver un throw si la entrada es undefined", () => {
+    const numeros: any = undefined;
+    const resultado = () => sumaDigitos(numeros);
+    expect(resultado).toThrowError("No se ha introducido un número");
+  });
+  it("Debería devolver un throw si la entrada es nulo", () => {
+    const numeros: any = null;
+    const resultado = () => sumaDigitos(numeros);
+    expect(resultado).toThrowError("No se ha introducido un número");
+  });
+  it(`[2, 2, 6, 4, 1, 6, 5, 8, 9] ==> 43
+  Tiene que devolver la suma de todos los valores del array`, () => {
+    const numeros = [2, 2, 6, 4, 1, 6, 5, 8, 9];
+    const resultadoEsperado = 43;
+    const resultado = sumaDigitos(numeros);
+    expect(resultadoEsperado).toEqual(resultado);
+  });
+});
+
+describe("calculaFlagDeSumaTotal", () => {
+  it("Debería devolver un throw si la entrada es undefined", () => {
+    const sumaTotal: any = undefined;
+    const resultado = () => calculaFlagDeSumaTotal(sumaTotal);
+    expect(resultado).toThrowError("No se ha introducido un número");
+  });
+  it("Debería devolver un throw si la entrada es nulo", () => {
+    const sumaTotal: any = null;
+    const resultado = () => calculaFlagDeSumaTotal(sumaTotal);
+    expect(resultado).toThrowError("No se ha introducido un número");
+  });
+  it("flag = 10 - (sumaTotal % 10)", () => {
+    const sumaTotal = 43;
+    const resultadoEsperado = 7;
+    const resultado = calculaFlagDeSumaTotal(sumaTotal);
+    expect(resultadoEsperado).toEqual(resultado);
   });
 });
