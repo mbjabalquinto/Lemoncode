@@ -6,7 +6,7 @@ interface Monedero {
 }
 
 export const compruebaSiEsUnNumeroValido = (numero: number) => {
-  if (!numero || isNaN(numero)) {
+  if (!numero || isNaN(numero) || numero < 0) {
     throw new Error("No se ha introducido un número válido");
   }
 };
@@ -14,19 +14,20 @@ export const compruebaSiEsUnNumeroValido = (numero: number) => {
 export const calculaElCambio = (importe: number, pago: number): number => {
   compruebaSiEsUnNumeroValido(importe);
   compruebaSiEsUnNumeroValido(pago);
-  const vuelta = pago - importe;
-  return vuelta;
+  return pago - importe;
 };
 
 export const buscaBilletesParaElCambio = (cambio: number): Monedero[] => {
   compruebaSiEsUnNumeroValido(cambio);
   const monedero: Monedero[] = [];
   for (let i = 0; i < moneda.length; i++) {
+    // SI DEVUELVE MENOS DE 1 NO LE PUEDO DAR ESE BILLETE/MONEDA POR SER MAS GRANDE EL VALOR QUE EL IMPORTE ASÍ QUE PASAMOS AL SIGUIENTE MAS PEQUEÑO.
     if (cambio / moneda[i] >= 1) {
       monedero.push({
         valor: moneda[i],
         contador: Math.floor(cambio / moneda[i]),
       });
+      // ACTUALIZAMOS EL VALOR DE CAMBIO Y LE ASIGNAMOS EL RESTO DE LA DIVISIÓN PORQUE ES LO QUE FALTA POR DEVOLVER.
       cambio = Number((cambio % moneda[i]).toFixed(2));
     }
   }

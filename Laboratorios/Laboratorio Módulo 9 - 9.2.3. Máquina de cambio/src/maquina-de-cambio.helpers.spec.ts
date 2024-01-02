@@ -5,7 +5,7 @@ import {
 } from "./maquina-de-cambio.helpers";
 
 describe("compruebaSiEsUnNumeroValido", () => {
-  it.each([[undefined], [null], ["no es un número"]])(
+  it.each([[undefined], [null], ["no es un número"], [0], [""], [NaN], [-1]])(
     "Debe devolver una excepción si no es un número válido",
     (importe: any) => {
       const resultado = () => compruebaSiEsUnNumeroValido(importe);
