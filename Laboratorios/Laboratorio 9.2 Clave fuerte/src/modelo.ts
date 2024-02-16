@@ -4,7 +4,7 @@ export interface ValidacionClave {
 }
 
 export const nombreUsuario = "marcos";
-export const password = "marcos1234";
+export const clave = "marcos1234";
 
 export const commonPasswords: string[] = [
   "password",
