@@ -3,8 +3,10 @@ export interface ValidacionClave {
   error?: string;
 }
 
-export const nombreUsuario = "marcos";
-export const clave = "marcos1234";
+export const nombreUsuario = "manolo";
+export const clave = "M@rcos123";
+
+export type Funciones = (params: any) => ValidacionClave;
 
 export const commonPasswords: string[] = [
   "password",

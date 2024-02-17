@@ -85,7 +85,7 @@ describe("tieneCaracteresEspeciales", () => {
     expect(tieneCaracteresEspeciales(clave)).toEqual(resultadoEsperado);
   });
   it("Debe devolver true.", () => {
-    const clave: string = "@marcos";
+    const clave: string = "m@rcos";
     const resultadoEsperado: ValidacionClave = {
       esValida: true,
     };

@@ -1,4 +1,4 @@
-import { ValidacionClave, commonPasswords } from "./modelo";
+import { ValidacionClave, Funciones } from "./modelo";
 
 // Debe tener mayúsculas y minúsculas
 export const tieneMayusculasYMinusculas = (clave: string): ValidacionClave => {
@@ -34,9 +34,9 @@ export const tieneCaracteresEspeciales = (clave: string): ValidacionClave => {
   const validacionClave: ValidacionClave = { esValida: false };
   for (let i = 0; i < clave.length; i++) {
     if (
-      !(clave >= "0" && clave <= "9") &&
-      !(clave >= "a" && clave <= "z") &&
-      !(clave >= "A" && clave <= "Z")
+      !(clave[i] >= "0" && clave[i] <= "9") &&
+      !(clave[i] >= "a" && clave[i] <= "z") &&
+      !(clave[i] >= "A" && clave[i] <= "Z")
     ) {
       validacionClave.esValida = true;
       break;
@@ -91,11 +91,29 @@ export const tienePalabrasComunes = (
   return validacionClave;
 };
 
-// Debe devolver un objeto con 2 propiedades
+// Debe devolver un objeto con 2 propiedades. Devolvemos el primer error que se obtiene.
 export const validarClave = (
   nombreUsuario: string,
   clave: string,
   commonPasswords: string[]
 ): ValidacionClave => {
-  if(tieneMayusculasYMinusculas(clave))
+  let validacionClave: ValidacionClave = { esValida: true };
+
+  // La única forma que se me ocurre para poder llamar a las funciones en un bucle y parar al primer error es metiendo las funciones en un array.
+  const funciones: Funciones[] = [
+    () => tieneMayusculasYMinusculas(clave),
+    () => tieneNumeros(clave),
+    () => tieneCaracteresEspeciales(clave),
+    () => tieneLongitudMinima(clave),
+    () => tieneNombreUsuario(nombreUsuario, clave),
+    () => tienePalabrasComunes(clave, commonPasswords),
+  ];
+
+  for (let i = 0; i < funciones.length; i++) {
+    validacionClave = funciones[i](i);
+    if (!validacionClave.esValida) {
+      break;
+    }
+  }
+  return validacionClave;
 };
