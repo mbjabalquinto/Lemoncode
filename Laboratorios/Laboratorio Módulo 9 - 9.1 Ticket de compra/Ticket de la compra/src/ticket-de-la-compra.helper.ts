@@ -96,11 +96,14 @@ export const calculaTotalPorTipoIva = (
     },
     {}
   );
-
+  console.log("totalPorTipoIvaObj");
+  console.log(totalPorTipoIvaObj);
   const totalPorTipoIvaArr: TotalPorTipoIva[] = Object.entries(
     totalPorTipoIvaObj
   ).map(([tipoIva, cuantia]) => ({ tipoIva: tipoIva as TipoIva, cuantia }));
 
+  console.log("totalPorTipoIvaArr:");
+  console.log(totalPorTipoIvaArr);
   return totalPorTipoIvaArr;
 };
 
