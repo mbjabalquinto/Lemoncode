@@ -1,0 +1,63 @@
+/* style.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 220px); /* 3 columnas de 220px de ancho fijo */
+    gap: 20px; /* Espaciado entre columnas y filas */
+    justify-content: center; /* Centra las columnas horizontalmente */
+    margin: 20px auto; /* Centra el contenedor verticalmente y horizontalmente */
+    max-width: 100%; /* Asegúrate de que no se desborde en pantallas más pequeñas */
+}
+
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: left; /* Asegura que todo el contenido está alineado a la izquierda */
+    width: 200px;
+    height: 300px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Agrupa contenido en la parte superior */
+    align-items: flex-start; /* Asegura que los elementos estén alineados a la izquierda */
+}
+
+
+.card p {
+    margin: 5px 0; /* Reduce el espacio entre cada párrafo */
+    text-align: left; /* Asegura que los textos estén alineados a la izquierda */
+    font-size: 14px;
+    line-height: 1.2; /* Reduce el espaciado entre líneas para mayor compacidad */
+}
+
+
+img {
+    display: block;
+    width: 100%; /* Imagen ocupa todo el ancho disponible */
+    height: 150px; /* Altura fija para uniformidad */
+    object-fit: contain; /* Se aseguran de no recortarse */
+    margin-bottom: 10px;
+    border-radius: 5px; /* Mantén las esquinas redondeadas */
+}
+
+
+input {
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 2px solid #333;
+    border-radius: 5px;
+}
