@@ -14,6 +14,7 @@ export const extractImagesFromHTML = (html: string): string[] => {  // recibo un
     return images;
 }
 
+// Recibimos un array de URLs de imágenes y las insertamos en el HTML.
 export const insertImagesIntoHTML = (images: string[]) => {
     const contenedor = document.getElementById("contenedor");
 
