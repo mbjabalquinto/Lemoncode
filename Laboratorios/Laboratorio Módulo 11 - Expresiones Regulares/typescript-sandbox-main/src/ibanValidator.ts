@@ -13,7 +13,6 @@ export const ibanEsValido = (iban: string): boolean => {
     return ibantools.isValidIBAN(iban);
 }
 
-
 export const extraeCodigoSucursal = (iban: string): string => {
     const sucursal = iban.slice(8, 12); // Extrae los 4 dígitos de la sucursal
     return sucursal;
@@ -33,9 +32,6 @@ export const calculaNombreBanco = (iban: string): string => {
     //const banco = iban[4] + iban[5] + iban[6] + iban[7]; // Extrae los 4 dígitos del banco
     const banco = iban.slice(4, 8); // Extrae los 4 dígitos del banco
     const nombreBanco = bancos[banco];
-    if (!nombreBanco) {
-         console.log("Banco no encontrado");
-    }
     return nombreBanco || "Banco no encontrado"; // Devuelve un mensaje si el banco no se encuentra
     
 }
