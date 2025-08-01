@@ -19,6 +19,7 @@ export const insertImagesIntoHTML = (images: string[]) => {
     const contenedor = document.getElementById("contenedor");
 
     if (!contenedor) return; // Si no existe el contenedor, no hacemos nada.
+    contenedor.innerHTML = ""; // Limpiamos el contenido del contenedor.
 
     for (const url of images) { // usamos for .. of para recorrer los valores. El for .. in es para los índices.
         const img = document.createElement("img");
