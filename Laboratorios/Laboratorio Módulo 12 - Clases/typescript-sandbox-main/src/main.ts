@@ -22,7 +22,7 @@ class ReservaCliente{
         this.iva = 0;
         if (this.reservas && this.precios){
             for (let reserva of this.reservas){
-                this.subtotal += this.precios[reserva.tipoHabitacion] * reserva.noches;
+                this.subtotal += this.precios[reserva.tipoHabitacion] * reserva.noches; // Nos ahorramos los if ya que gracias al interface tipoHabitacion va a ser siempre standard o suite.
                 if (reserva.desayuno){
                     this.subtotal += 15 * reserva.pax * reserva.noches;
                 }
@@ -51,7 +51,7 @@ class Particular extends ReservaCliente{
         }
     } 
     
-    public realizaCalculoCompleto(){
+    public realizaCalculoCompleto(){  // Nos aseguramos que las llamadas a los métodos se hacen en el orden correcto. No hay posibilidad de error de esta forma.
         this.calculaSubtotal();
         this.calculaAdicionales();
         this.calculaTotal();
