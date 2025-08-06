@@ -2,7 +2,6 @@ import { Reserva } from "./pedido.model";
 import { reservas } from "./pedido.data";
 
 class ReservaCliente{
-    nombre: string;
     reservas: Reserva[];
     precios: {[tipo: string]: number};
     subtotal: number;
@@ -14,76 +13,81 @@ class ReservaCliente{
         this.subtotal = 0;
         this.total = 0;
         this.iva = 0;
-        this.nombre = "";
-        
     }
 
-    calculaTotal(){
+    protected calculaSubtotal(){
         // Reseteo los valores antes de volver a hacer los cálculos.
         this.subtotal = 0;
         this.total = 0;
         this.iva = 0;
         if (this.reservas && this.precios){
             for (let reserva of this.reservas){
-                if (reserva.tipoHabitacion === "standard"){
-                    this.subtotal += this.precios["standard"] * reserva.noches;
-                }
-                if (reserva.tipoHabitacion === "suite"){
-                    this.subtotal += this.precios["suite"] * reserva.noches;
-                }
-                if (reserva.pax > 1){
-                    let adicionales = reserva.pax - 1;
-                    this.subtotal += adicionales * 40 * reserva.noches;
-                }
+                this.subtotal += this.precios[reserva.tipoHabitacion] * reserva.noches;
                 if (reserva.desayuno){
                     this.subtotal += 15 * reserva.pax * reserva.noches;
                 }
             }
-            this.iva = (this.subtotal * 21) / 100;
-            this.total = this.subtotal + this.iva;
-            
-        }else{console.log("Algo ha fallado con los precios o las reservas");}         
 
+        }else{console.log("Algo ha fallado con los precios o las reservas");}         
      }
 
+    protected calculaTotal(){
+        this.total = this.subtotal * 1.21;
+        this.iva = this.total - this.subtotal;
+    }
 }
 
 class Particular extends ReservaCliente{
-    nombre = "PARTICULAR";
     constructor(reservas: Reserva[]){
         super(reservas, {"standard": 100, "suite": 150});
+    }
+
+    private calculaAdicionales(){
+        for (let reserva of this.reservas){
+            if (reserva.pax > 1){
+                let adicionales = reserva.pax - 1;
+                this.subtotal += adicionales * 40 * reserva.noches;
+            }
+        }
+    } 
+    
+    public realizaCalculoCompleto(){
+        this.calculaSubtotal();
+        this.calculaAdicionales();
+        this.calculaTotal();
     }
 }
 
 class TourOperador extends ReservaCliente{
-    nombre = "TOUR OPERADOR";
     constructor(reservas: Reserva[]){
         super(reservas, {"standard": 100, "suite": 100});
     }
 
-    calculaDescuento(){
+    private calculaDescuento(){
         //this.subtotal = this.subtotal - (this.subtotal * 15 / 100);
         this.subtotal *= 0.85; // Así queda mas fino.
     }
 
+    public realizaCalculoCompelto(){
+        this.calculaSubtotal();
+        this.calculaDescuento();
+        this.calculaTotal()
+    }
 }
 
 const mostrarResumen = (clase: ReservaCliente) =>{
     console.log("****************************")
-    console.log(clase.nombre);
-    console.log("--------------")
-    console.log(`Total: ${clase.total.toFixed(2)}€`);
     console.log(`Subtotal: ${clase.subtotal.toFixed(2)}€`);
     console.log(`IVA: ${clase.iva.toFixed(2)}€`);
+    console.log(`Total: ${clase.total.toFixed(2)}€`);
 }
 
+console.log("--- Caso Cliente Particular ---");
 const clienteParticular = new Particular(reservas);
-
-clienteParticular.calculaTotal();
+clienteParticular.realizaCalculoCompleto();
 mostrarResumen(clienteParticular)
 
+console.log("\n--- Caso Tour Operador ---");
 const clienteTourOperador = new TourOperador(reservas);
-
-clienteTourOperador.calculaTotal();
-clienteTourOperador.calculaDescuento();
+clienteTourOperador.realizaCalculoCompelto();
 mostrarResumen(clienteTourOperador);
