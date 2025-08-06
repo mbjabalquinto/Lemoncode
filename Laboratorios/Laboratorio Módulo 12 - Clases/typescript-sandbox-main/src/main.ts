@@ -39,10 +39,10 @@ class ReservaCliente{
                     this.subtotal += 15 * reserva.pax * reserva.noches;
                 }
             }
-        } 
-
-        this.iva = (this.subtotal * 21) / 100;
-        this.total = this.subtotal + this.iva;
+            this.iva = (this.subtotal * 21) / 100;
+            this.total = this.subtotal + this.iva;
+            
+        }else{console.log("Algo ha fallado con los precios o las reservas");}         
 
      }
 
