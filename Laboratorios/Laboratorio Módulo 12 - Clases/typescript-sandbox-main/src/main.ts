@@ -83,9 +83,9 @@ const mostrarResumen = (clase: ReservaCliente) =>{
 }
 
 console.log("--- Caso Cliente Particular ---");
-const clienteParticular = new Particular(reservas);
-clienteParticular.realizaCalculoCompleto();
-mostrarResumen(clienteParticular)
+const clienteParticular = new Particular(reservas);  // Creo el objeto de la clase hija
+clienteParticular.realizaCalculoCompleto();         // Llamo al método que se encarga de toda la lógica
+mostrarResumen(clienteParticular)                  // Muestro los datos
 
 console.log("\n--- Caso Tour Operador ---");
 const clienteTourOperador = new TourOperador(reservas);
