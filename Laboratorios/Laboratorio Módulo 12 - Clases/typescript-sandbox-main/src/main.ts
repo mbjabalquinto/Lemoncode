@@ -68,7 +68,7 @@ class TourOperador extends ReservaCliente{
         this.subtotal *= 0.85; // Así queda mas fino.
     }
 
-    public realizaCalculoCompelto(){
+    public realizaCalculoCompleto(){
         this.calculaSubtotal();
         this.calculaDescuento();
         this.calculaTotal()
@@ -89,5 +89,5 @@ mostrarResumen(clienteParticular)                  // Muestro los datos
 
 console.log("\n--- Caso Tour Operador ---");
 const clienteTourOperador = new TourOperador(reservas);
-clienteTourOperador.realizaCalculoCompelto();
+clienteTourOperador.realizaCalculoCompleto();
 mostrarResumen(clienteTourOperador);
