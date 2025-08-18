@@ -1,0 +1,29 @@
+import React from "react";
+import { Miembro } from "../modelo";
+import { MiembroFila } from "./miembro-fila";
+import {obtenerMiembros} from "../miembro.api"
+
+export const GridMiembros = () =>{
+    const [miembros, setMiembros] = React.useState<Miembro[]>([]); // Llamo al hook useState de React para crear un estado que se llama miembros y una función setMiembros para actualizarlo.
+      // El estado es un array de objetos del tipo Miembro, que hemos definido en el modelo.ts.
+    
+      React.useEffect(() => {  // Es una forma de emular el DOMContenLoaded. Al poner corchetes vacios solo se ejecuta la primera vez.
+                                // Es un hook de React como useState.
+
+      obtenerMiembros().then(setMiembros).catch((error) => console.log(error));  // Recibimos los datos de la API.
+      }, []);
+
+    
+    return ( 
+    <div className="user-list-container">
+        <span className="header">Avatar</span>
+        <span className="header">Id</span>
+        <span className="header">Nombre</span>
+        {miembros.map((miembro) => (
+            <MiembroFila key={miembro.id} miembro={miembro} />
+        ))}
+    
+    </div>
+  );
+
+};
