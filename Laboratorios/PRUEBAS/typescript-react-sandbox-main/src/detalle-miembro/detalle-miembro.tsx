@@ -1,3 +1,5 @@
+// En este fichero creamos el componente MiembroDetalle que se encarga de mostrar los detalles de un miembro específico.
+// Se renderizará en pantalla cuando se haga clic sobre uno de los miembros.
 import React from 'react';
 import { useParams } from "react-router-dom";
 import { getMiembroById } from "../miembro.api";
@@ -14,7 +16,6 @@ export const MiembroDetalle: React.FC = () => {
             getMiembroById(id).then(setMiembro);
         }
     }, []);
-
 
     return (
         
