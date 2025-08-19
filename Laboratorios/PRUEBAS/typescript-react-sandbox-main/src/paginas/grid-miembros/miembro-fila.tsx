@@ -1,7 +1,7 @@
 import React from "react";
 import { Miembro } from "../../modelo-miembro";
 import { Link, generatePath } from "react-router-dom";
-import { rutas } from "../../constantes";
+import { rutas } from "@/constantes";
 
 interface Props{
     miembro: Miembro;

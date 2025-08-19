@@ -5,6 +5,9 @@
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
     "moduleResolution": "Node",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "strict": true,
     "resolveJsonModule": true,
     "isolatedModules": false,

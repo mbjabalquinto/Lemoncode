@@ -1,7 +1,7 @@
 import React from "react";
 import { Personaje } from "../../modelo-personaje"
 import { Link, generatePath } from "react-router-dom";
-import { rutas } from "../../constantes";
+import { rutas } from "@/constantes";
 
 interface Props {
     personaje: Personaje;

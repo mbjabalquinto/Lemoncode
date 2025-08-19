@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { rutas } from "../../constantes";
+//import { rutas } from "../../constantes";
+import { rutas } from "@/constantes";   // quitamos el harcodeo y usamos alias. Hay que modificar tsconfig.json y vite.config.ts
 
 export const Home = () => {
 
