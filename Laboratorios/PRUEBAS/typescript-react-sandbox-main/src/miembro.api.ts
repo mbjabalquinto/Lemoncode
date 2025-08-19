@@ -1,4 +1,4 @@
-import {Miembro} from "./modelo"
+import {Miembro} from "./modelo-miembro"
 
 // Esta función devuelve una promesa que se resuelve con un array de miembros. Todos los miembros.
 export const obtenerMiembros = (): Promise<Miembro[]> =>  

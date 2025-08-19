@@ -1,7 +1,7 @@
 // En este fichero creamos el componente GridMiembros que se encarga de mostrar una lista de miembros.
 // El fichero app llamará a este componente para renderizar todos los miembros en pantalla.
 import React from "react";
-import { Miembro } from "../modelo";
+import { Miembro } from "../modelo-miembro";
 import { MiembroFila } from "./miembro-fila";
 import {obtenerMiembros} from "../miembro.api"
 

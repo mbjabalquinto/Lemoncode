@@ -2,13 +2,21 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GridMiembros } from "./grid-miembros/grid-miembros";
 import { MiembroDetalle } from "./detalle-miembro";
+import { Home } from "./home/home"
+import { GridPersonajes } from "./grid-personajes/grid-personajes";
+import { PersonajeDetalle } from "./detalle-personaje";
+
 
 export const Rutas: React.FC = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<GridMiembros />} /> 
-                <Route path="/detalle/:id" element={<MiembroDetalle />} />
+                <Route path="/" element={<Home />} /> 
+                <Route path="/personas/" element={<GridMiembros/>} />
+                <Route path="/personas/detalle/:id" element={<MiembroDetalle />} />
+                <Route path="/personajes/" element={<GridPersonajes/>} />
+                <Route path="/personajes/detalle/:id" element={<PersonajeDetalle/>} />
+
             </Routes>
         </Router>
     );

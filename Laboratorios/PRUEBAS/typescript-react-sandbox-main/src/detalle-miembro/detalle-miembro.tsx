@@ -6,7 +6,7 @@ import { getMiembroById } from "../miembro.api";
 import { Miembro, crearMiembroVacio } from "./modelo";
 
 
-export const MiembroDetalle: React.FC = () => {
+export const MiembroDetalle: React.FC = () => { // useParams es un hook de React Router que nos permite acceder a los parámetros de la URL. Devuelve un objeto con todos los parámetros de la URL -> :id
     const { id } = useParams<{id: string}>();   // Hacemos destructuring para obtener la id y tipamos el objeto que nos devuelve useParams.
    
     const [miembro, setMiembro] = React.useState<Miembro>(crearMiembroVacio());
