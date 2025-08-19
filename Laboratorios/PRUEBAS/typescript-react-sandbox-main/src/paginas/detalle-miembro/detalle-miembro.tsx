@@ -2,7 +2,7 @@
 // Se renderizará en pantalla cuando se haga clic sobre uno de los miembros.
 import React from 'react';
 import { useParams } from "react-router-dom";
-import { getMiembroById } from "../miembro.api";
+import { getMiembroById } from "../../miembro.api";
 import { Miembro, crearMiembroVacio } from "./modelo";
 
 

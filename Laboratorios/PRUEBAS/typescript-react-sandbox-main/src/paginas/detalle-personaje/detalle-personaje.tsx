@@ -1,7 +1,7 @@
 import React from "react";
 import { Personaje, personajeVacio } from "./modelo";
 import { useParams } from "react-router-dom";
-import { getPersonajeById } from "../personaje.api"
+import { getPersonajeById } from "../../personaje.api"
 
 
 export const PersonajeDetalle: React.FC  = () => {

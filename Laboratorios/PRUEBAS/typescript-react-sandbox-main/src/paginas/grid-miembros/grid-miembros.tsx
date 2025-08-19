@@ -1,9 +1,9 @@
 // En este fichero creamos el componente GridMiembros que se encarga de mostrar una lista de miembros.
 // El fichero app llamará a este componente para renderizar todos los miembros en pantalla.
 import React from "react";
-import { Miembro } from "../modelo-miembro";
+import { Miembro } from "../../modelo-miembro";
 import { MiembroFila } from "./miembro-fila";
-import {obtenerMiembros} from "../miembro.api"
+import {obtenerMiembros} from "../../miembro.api"
 
 export const GridMiembros = () =>{
     const [miembros, setMiembros] = React.useState<Miembro[]>([]); // Llamo al hook useState de React para crear un estado que se llama miembros y una función setMiembros para actualizarlo.

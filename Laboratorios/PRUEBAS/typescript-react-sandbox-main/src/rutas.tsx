@@ -1,21 +1,20 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { GridMiembros } from "./grid-miembros/grid-miembros";
-import { MiembroDetalle } from "./detalle-miembro";
-import { Home } from "./home/home"
-import { GridPersonajes } from "./grid-personajes/grid-personajes";
-import { PersonajeDetalle } from "./detalle-personaje";
+import { rutas } from "./constantes"
+
+// Importamos los componentes de las páginas que vamos a utilizar en las rutas
+import { GridMiembros, GridPersonajes, Home, MiembroDetalle, PersonajeDetalle } from "./paginas";
 
 
 export const Rutas: React.FC = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Home />} /> 
-                <Route path="/personas/" element={<GridMiembros/>} />
-                <Route path="/personas/detalle/:id" element={<MiembroDetalle />} />
-                <Route path="/personajes/" element={<GridPersonajes/>} />
-                <Route path="/personajes/detalle/:id" element={<PersonajeDetalle/>} />
+                <Route path={rutas.HOME} element={<Home />} />
+                <Route path={rutas.PERSONAS} element={<GridMiembros/>} />
+                <Route path={rutas.DETALLES_PERSONA} element={<MiembroDetalle />} />
+                <Route path={rutas.PERSONAJES} element={<GridPersonajes/>} />
+                <Route path={rutas.DETALLE_PERSONAJE} element={<PersonajeDetalle/>} />
 
             </Routes>
         </Router>

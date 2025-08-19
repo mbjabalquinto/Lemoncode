@@ -1,6 +1,6 @@
 import React from "react";
-import { Personaje } from "../modelo-personaje";
-import { obtenerPersonajes } from "../personaje.api";
+import { Personaje } from "../../modelo-personaje";
+import { obtenerPersonajes } from "../../personaje.api";
 import { FilaPersonaje } from "./personaje-fila"
 
 export const GridPersonajes = () => {
