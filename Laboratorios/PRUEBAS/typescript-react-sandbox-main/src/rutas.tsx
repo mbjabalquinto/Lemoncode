@@ -3,19 +3,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { rutas } from "./constantes"
 
 // Importamos los componentes de las páginas que vamos a utilizar en las rutas
-import { GridMiembros, GridPersonajes, Home, MiembroDetalle, PersonajeDetalle } from "./paginas";
+import { GridMiembros, GridPersonajes, Home, MiembroDetalle, PersonajeDetalle, Login } from "./paginas";
 
 
 export const Rutas: React.FC = () => {
     return (
         <Router>
             <Routes>
-                <Route path={rutas.HOME} element={<Home />} />
+                <Route path={rutas.HOME} element={<Login />} />
+                <Route path={rutas.OPCIONES} element={<Home />} />
                 <Route path={rutas.PERSONAS} element={<GridMiembros/>} />
                 <Route path={rutas.DETALLES_PERSONA} element={<MiembroDetalle />} />
                 <Route path={rutas.PERSONAJES} element={<GridPersonajes/>} />
                 <Route path={rutas.DETALLE_PERSONAJE} element={<PersonajeDetalle/>} />
-
             </Routes>
         </Router>
     );

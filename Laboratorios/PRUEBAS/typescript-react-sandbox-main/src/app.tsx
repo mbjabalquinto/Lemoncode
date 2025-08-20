@@ -1,8 +1,11 @@
 import { Rutas } from "./rutas"
+import { MiContextoProvider } from "./contexto";
 
 export const App = () => {
-  return (
-    <Rutas />  
+  return (  // Envolvemos toda la aplicación con el provider.
+    <MiContextoProvider>
+      <Rutas />  
+    </MiContextoProvider>
   )  
 };
 

@@ -27,3 +27,68 @@ width: 80px;
     width: 200px;
     border-radius: 10px;
 }
+
+.contenedor-layout { 
+display: flex; 
+flex-direction: column; 
+min-height: 100vh; 
+gap: 10px; 
+} 
+.contenedor-layout h1 { 
+font-size: 1.75rem; 
+} 
+.layout-header { 
+display: flex; 
+justify-content: space-between;
+ align-items: center; 
+background-color: #2f4858; 
+color: white; 
+font-weight: 500; 
+padding: 0 20px; 
+} 
+.layout-footer { 
+display: flex; 
+justify-content: flex-end; 
+background-color: #2f4858; 
+color: white; 
+padding: 0 20px; 
+margin-top: auto; 
+} 
+.layout-footer img { 
+width: 70px; 
+} 
+.layout-footer p { 
+font-size: 1rem; 
+}
+
+.contenedor-login { 
+display: flex; 
+flex-direction: column; 
+align-items: center; 
+gap: 10px; 
+} 
+
+ .contenedor-formulario {
+     display: flex; 
+flex-direction: column; 
+gap: 12px; 
+} 
+.contenedor-formulario input { 
+width: 300px; 
+height: 30px; 
+border-radius: 5px; 
+border: 1px solid #2f4858; 
+padding: 5px 15px; 
+} 
+.contenedor-formulario button { 
+width: 200px; 
+border-radius: 5px; 
+background-color: #2f4858; 
+color: white; 
+font-weight: bold; 
+padding: 10px 15px; 
+align-self: center; 
+} 
+.contenedor-formulario label { 
+font-weight: bold; 
+} 
