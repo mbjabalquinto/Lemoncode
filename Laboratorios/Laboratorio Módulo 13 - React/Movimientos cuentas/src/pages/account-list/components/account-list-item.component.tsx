@@ -41,11 +41,19 @@ export const AccountListItemComponent: React.FC<Props> = (props) => {
                 {accountItem.iban}
             </Link>
         </span> 
-        <span className={classes.dataCell}>{accountItem.name}</span>
+
+        <span className={classes.dataCell}>
+          {accountItem.name}
+          </span>
+
         <span className={`${classes.dataCell} ${classes.alignRight}`}>
-            {accountItem.balance}</span>
+            {accountItem.balance}
+        </span>
+
        <span className={`${classes.dataCell} ${classes.alignRight}`}>  
-            {accountItem.lastTransaction.toLocaleDateString()} </span>
+            {accountItem.lastTransaction.toLocaleDateString()} 
+        </span>
+        
         <span className={`${classes.dataCell} ${classes.selectContainer}`}>
         <select className={classes.select} onChange={handleSelectedOptionChange}>
             <option value={ACTION_NONE}>

@@ -10,22 +10,15 @@ export const NavbarComponent: React.FC = () => {
   return ( 
     <nav className={classes.navbar}> 
       <ul className={classes.list}>
-        <li
-          className={
-            pathname.startsWith(routesPrefixes.accountList)
-              ? classes.selected
-              : ""
-          }
-        >
+        <li className={pathname.startsWith(routesPrefixes.accountList)? classes.selected: ""}>
           <Link to={appRoutes.accountList}>Mis Cuentas</Link>
         </li>
-        <li
-          className={
-            pathname.startsWith(routesPrefixes.transfer)
-              ? classes.selected
-              : ""
-          }
-        > 
+
+         <li className={pathname.startsWith(appRoutes.movements)? classes.selected: ""}>
+          <Link to={appRoutes.movements}>Movimientos</Link>
+        </li> 
+
+        <li className={pathname.startsWith(routesPrefixes.transfer)? classes.selected: ""}> 
           <Link to={appRoutes.transfer}>Transferencias</Link>
         </li>
       </ul> 
