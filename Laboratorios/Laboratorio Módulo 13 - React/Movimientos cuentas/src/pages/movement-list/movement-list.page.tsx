@@ -1,15 +1,21 @@
 import { AppLayout } from "@/layouts";
 import React from "react";
 import classes from "./movement-list.page.module.css";
-import {  MovementListItemComponent } from "./components/movement-list-item.component";
+import { MovementListItemComponent } from "./components/movement-list-item.component";
 import { getMovements } from "@/pages/movement-list/api";
 import { useParams } from "react-router-dom";
 import { MovementVm } from "./movement-list.vm";
-import { mapAccountListFromApiToVm } from "./movement-list.mapper";
+import { mapAccountListFromApiToVm, mapAccountDetailsFromApiToVm } from "./movement-list.mapper";
 import { AccountDetailsComponent } from "./components/account-details.component";
+import { newAccountDetailsEmpty } from "./api/movement-list.api.model";
+import { AccountDetailsVm } from "./movement-list.vm";
+import { getAccountDetails } from "./api/movement-list.api";
+
 
 export const MovementListPage: React.FC = () => {
     const [movements, setMovements] = React.useState<MovementVm[]>([]);
+
+    const [details, setDetails] = React.useState<AccountDetailsVm>(newAccountDetailsEmpty())
     
     const { id } = useParams();
 
@@ -17,14 +23,18 @@ export const MovementListPage: React.FC = () => {
         if (id) {
             getMovements(id).then((result) => 
                 setMovements(mapAccountListFromApiToVm(result)));
+
+            getAccountDetails(id).then((result) => 
+                setDetails(mapAccountDetailsFromApiToVm(result))
+            );
         }
 
-    }, []);
+    }, [id]);
 
     return (
         <AppLayout>
             <div className={classes.root}>
-                <AccountDetailsComponent />
+                <AccountDetailsComponent details={details} />
                 <MovementListItemComponent movements={movements} />
             </div>
         </AppLayout>

@@ -7,6 +7,9 @@ import { useLocation } from "react-router-dom";
 export const NavbarComponent: React.FC = () => { 
   const { pathname } = useLocation();
 
+  const isMovementPage = pathname.startsWith("/movements/");
+  
+  console.log("Current pathname:", pathname); // Debugging line to check the current pathname
   return ( 
     <nav className={classes.navbar}> 
       <ul className={classes.list}>
@@ -14,9 +17,11 @@ export const NavbarComponent: React.FC = () => {
           <Link to={appRoutes.accountList}>Mis Cuentas</Link>
         </li>
 
-         <li className={pathname.startsWith(appRoutes.movements)? classes.selected: ""}>
-          <Link to={appRoutes.movements}>Movimientos</Link>
+         {isMovementPage && (
+         <li className={pathname.startsWith(routesPrefixes.movements)? classes.selected: ""}>
+          <Link to={pathname}>Movimientos</Link>
         </li> 
+          )}
 
         <li className={pathname.startsWith(routesPrefixes.transfer)? classes.selected: ""}> 
           <Link to={appRoutes.transfer}>Transferencias</Link>
