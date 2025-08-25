@@ -6,8 +6,9 @@ export const buildValidationFailedResult = (errorMessage: string): FieldValidati
   errorMessage, 
 }); 
 
-export const buildValidationSucceededResult = () => ({ 
+export const buildValidationSucceededResult = (): FieldValidationResult => ({ 
   succeeded: true, 
+  errorMessage: undefined,
 }); 
 
 export const buildRequiredFieldValidationFailedResponse = () => 

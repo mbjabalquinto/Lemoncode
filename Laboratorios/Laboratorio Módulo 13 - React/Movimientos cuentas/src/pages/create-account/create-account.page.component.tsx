@@ -5,10 +5,11 @@ import {
   CreateAccountError,
   createEmptyAccountError,
 } from "./create-account.model";
-import { validateForm } from "./create-account.validations";
+import { validateForm } from "./validations/create-account.form.validations";
 import { accountOptions } from "./create-account.model"; // tu lista de opciones
 import { saveAccount } from "./api/create-account.api";
 import { useNavigate } from "react-router-dom";
+import classes from "./create-account.page.component.module.css";
 //import { getAccountList } from "../account-list/api";
 
 
@@ -41,27 +42,37 @@ export const CreateNewAccountPage: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Tipo de cuenta</label>
-      <select name="type" value={account.type} onChange={handleFieldChange}>
-        <option value="">Selecciona tipo de cuenta</option>
-        {accountOptions.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-      <p>{errors.type}</p>
-
-      <label>Alias</label>
-      <input
-        name="name"
-        value={account.name}
-        onChange={handleFieldChange}
-      />
-      <p>{errors.name}</p>
-
-      <button type="submit">Guardar</button>
-    </form>
+    <div>
+        <form onSubmit={handleSubmit}>
+        <div className={classes.formContainer}>
+          <div>
+            <label>Tipo de cuenta</label>
+            <select name="type" value={account.type} onChange={handleFieldChange}>
+            <option value="">Selecciona tipo de cuenta</option>
+            {accountOptions.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+                {opt.label}
+            </option>
+            ))}
+            </select>
+            <p>{errors.type}</p>
+            </div>
+            <div>
+            <label>Alias</label>
+            <input
+                name="name"
+                value={account.name}
+                onChange={handleFieldChange}
+                className={classes.small}
+            />
+            <p>{errors.name}</p>
+            </div>
+        </div>
+        <div>
+            <button className={classes.button} type="submit">Guardar</button>
+        </div>
+        </form>
+        
+    </div>        
   );
 };
