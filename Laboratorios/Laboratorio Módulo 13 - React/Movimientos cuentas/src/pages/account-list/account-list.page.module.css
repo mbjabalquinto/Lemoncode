@@ -16,3 +16,7 @@ border-bottom: 5px solid var(--secondary_color);
 font-size: 2.2rem; 
 font-weight: 300; 
 } 
+
+.linkNoUnderline {
+  text-decoration: none;
+}

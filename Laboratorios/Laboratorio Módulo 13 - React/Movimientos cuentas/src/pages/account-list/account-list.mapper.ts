@@ -1,9 +1,7 @@
 import * as apiModel from "./api"; 
 import * as viewModel from "./account-list.vm"; 
 
-export const mapAccountListFromApiToVm = ( 
-  accountList: apiModel.Account[] 
-): viewModel.AccountVm[] => 
+export const mapAccountListFromApiToVm = (accountList: apiModel.Account[]): viewModel.AccountVm[] => 
   accountList.map((account) => ({ 
     id: account.id, 
     iban: account.iban, 
