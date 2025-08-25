@@ -25,28 +25,20 @@
       "lastTransaction": "2019-11-15T08:29:04"
     },
     {
-      "iban": "NL36 DCFV 6020 0172 15",
-      "name": "Nómina",
-      "type": "salary",
+      "iban": "BE23 0600 2503 0047",
+      "name": "Cuenta Nómina Marcos",
+      "type": "3",
       "balance": 0,
-      "lastTransaction": "2025-08-25T15:36:49.856Z",
-      "id": "esXaAO8"
+      "lastTransaction": "2025-08-25T17:40:04.267Z",
+      "id": "gUGXlxb"
     },
     {
-      "iban": "AZ06 J571 0670 2722 4371 4090 1005",
-      "name": "Nómina",
-      "type": "current",
+      "iban": "SA04 9104 9K96 0450 2360 U447",
+      "name": "Ahorro conjunta",
+      "type": "2",
       "balance": 0,
-      "lastTransaction": "2025-08-25T15:38:44.132Z",
-      "id": "9vcYCDP"
-    },
-    {
-      "iban": "KZ24 0046 2718 L302 5098",
-      "name": "Cuenta Secreta",
-      "type": "savings",
-      "balance": 0,
-      "lastTransaction": "2025-08-25T15:44:23.428Z",
-      "id": "wldzuOm"
+      "lastTransaction": "2025-08-25T17:41:04.240Z",
+      "id": "jcBFIaI"
     }
   ],
   "movements": [

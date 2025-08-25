@@ -55,7 +55,7 @@ export const CreateNewAccountPage: React.FC = () => {
             </option>
             ))}
             </select>
-            <p>{errors.type}</p>
+            <p className={classes.error}>{errors.type}</p>
             </div>
             <div>
             <label>Alias</label>
@@ -65,7 +65,7 @@ export const CreateNewAccountPage: React.FC = () => {
                 onChange={handleFieldChange}
                 className={classes.small}
             />
-            <p>{errors.name}</p>
+            <p className={classes.error}>{errors.name}</p>
             </div>
         </div>
         <div>

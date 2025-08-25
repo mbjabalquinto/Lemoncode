@@ -19,7 +19,7 @@ export const createEmptyAccountError = (): CreateAccountError => ({
 });
 
 export const accountOptions = [
-  { label: "Cuenta Corriente", value: "current" },
-  { label: "Cuenta de Ahorro", value: "savings" },
-  { label: "Cuenta de Nómina", value: "salary" },
+  { label: "Cuenta Corriente", value: "1" },
+  { label: "Cuenta de Ahorro", value: "2" },
+  { label: "Cuenta de Nómina", value: "3" },
 ];
